@@ -28,17 +28,15 @@ connectDB()
 //   }),
 // )
 
-app.post('/message', (req, res) => {
-  const output = getOutput(req)
+app.get('/openai', async (req, res) => {
+  try {
+    const output = await getOutput(req)
 
-  output
-    .then((data) => {
-      res.send({ output: data.choices[0].text })
-    })
-    .catch((err) => {
-      console.log(err)
-      res.send('error')
-    })
+    res.send({ output: output.choices[0].text })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ error: error.message })
+  }
 })
 
 app.listen(port, () => console.log(`Server running  http://localhost:${port}`))
