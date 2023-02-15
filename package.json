@@ -1,0 +1,28 @@
+{
+  "name": "brain-meld",
+  "version": "1.0.0",
+  "description": "Organise AI outputs",
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
+    "client": "npm run dev --prefix client"
+  },
+  "author": "Doruk Emre",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DorukEmre/brain-meld.git"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
+    "mongoose": "^6.9.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
+  }
+}
