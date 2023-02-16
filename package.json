@@ -8,7 +8,9 @@
   "scripts": {
     "compile": "tsc",
     "start": "npm run compile && node dist/index.js",
-    "server": "ts-node-esm server/index.ts",
+    "watch": "tsc -w",
+    "server": "nodemon dist/index.js",
+    "oldserver": "ts-node-esm server/index.ts",
     "client": "npm run dev --prefix client"
   },
   "author": "Doruk Emre",
