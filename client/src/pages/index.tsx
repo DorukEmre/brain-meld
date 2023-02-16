@@ -11,19 +11,19 @@ const client = new ApolloClient({
 
 type Props = {}
 const Home: NextPageWithLayout<Props> = (props) => {
-  const [text, setText] = useState('')
+  const [input, setInput] = useState('')
   const [response, setResponse] = useState('')
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const { data } = await client.query({
       query: gql`
-        query OpenAIQuery($text: String!) {
-          generateText(text: $text)
+        query OpenAIQuery($input: String!) {
+          generateText(input: $input)
         }
       `,
-      variables: { text },
+      variables: { input },
     })
 
     setResponse(data.generateText)
@@ -39,9 +39,9 @@ const Home: NextPageWithLayout<Props> = (props) => {
             Text:
             <input
               type="text"
-              value={text}
+              value={input}
               onChange={(event) => {
-                setText(event.target.value)
+                setInput(event.target.value)
               }}
             />
           </label>

@@ -1,77 +1,29 @@
 import express from 'express'
-import dotenv from 'dotenv'
-dotenv.config()
-import { graphqlHTTP } from 'express-graphql'
-
-import { buildSchema } from 'graphql'
-import { Configuration, OpenAIApi } from 'openai'
-
-import pkg from 'body-parser'
-const { json } = pkg
-import cors from 'cors'
-// const schema = require('./schema/schema')
-import connectDB from './config/db.js'
-const port = process.env.PORT || 5000
-
-// const getOutput = require('./middleware/openai')
-
 const app = express()
 
-app.use(json())
-app.use(cors())
+import * as dotenv from 'dotenv'
+import { fileURLToPath } from 'url'
+import path from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
-// Connect to DB
-connectDB()
+import { createServer } from 'node:http'
+import { createYoga } from 'graphql-yoga'
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+import connectDB from './config/db.js'
+import { schema } from './schema/schema.js'
+
+const port = process.env.PORT || 5000
+
+// Create a Yoga instance with a GraphQL schema.
+const yoga = createYoga({ schema, graphiql: true })
+// Pass it into a server to hook into request handlers.
+const server = createServer(yoga)
+
+// Connect to DB then start the server
+connectDB().then(() => {
+  server.listen(port, () => {
+    console.info(`Server is running on http://localhost:${port}/graphql`)
+  })
 })
-const openai = new OpenAIApi(configuration)
-
-// Define the GraphQL schema
-const schema = buildSchema(`
-  type Query {
-    generateText(text: String!): String
-  }
-`)
-
-// app.get('/openai', async (req, res) => {
-//   try {
-//     const output = await getOutput(req)
-
-//     res.send({ output: output.choices[0].text })
-//   } catch (error) {
-//     console.log(error)
-//     res.status(500).send({ error: error.message })
-//   }
-// })
-
-// Define the root resolver
-const root = {
-  generateText: async ({ text }) => {
-    try {
-      const result = await openai.createCompletion({
-        model: 'text-davinci-003',
-        prompt: text,
-        temperature: 0,
-        max_tokens: 70,
-      })
-      return result.data.choices[0].text
-    } catch (error) {
-      console.error(error)
-      return null
-    }
-  },
-}
-
-// Configure the GraphQL endpoint
-app.use(
-  '/graphql',
-  graphqlHTTP({
-    schema,
-    rootValue: root,
-    graphiql: true,
-  }),
-)
-
-app.listen(port, () => console.log(`Server running  http://localhost:${port}`))
