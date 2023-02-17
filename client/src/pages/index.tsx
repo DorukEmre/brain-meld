@@ -12,10 +12,15 @@ const client = new ApolloClient({
 })
 
 const Home: NextPageWithLayout = () => {
+  const lastResponseRef = useRef<HTMLDivElement>(null)
   const [input, setInput] = useState('')
   const [responses, setResponses] = useState<string[]>([])
   const [isCopied, setIsCopied] = useState(false)
   const [copiedIndex, setCopiedIndex] = useState(-1)
+
+  useEffect(() => {
+    lastResponseRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [responses.length])
 
   const handleSubmit = async (e: React.SyntheticEvent, index: number) => {
     e.preventDefault()
@@ -97,6 +102,9 @@ const Home: NextPageWithLayout = () => {
                       maxRows={20}
                       minRows={1}
                       cols={50}
+                      // ref={
+                      //   index === responses.length - 1 ? lastResponseRef : null
+                      // }
                     />
                   </label>
                   <button type="submit">Generate</button>
@@ -106,6 +114,9 @@ const Home: NextPageWithLayout = () => {
                       ? 'Copied!'
                       : 'Copy Text'}
                   </button>
+                  {index === responses.length - 1 && (
+                    <div ref={lastResponseRef} />
+                  )}
                 </form>
               </div>
             ))}
