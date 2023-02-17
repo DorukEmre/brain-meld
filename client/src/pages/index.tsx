@@ -1,10 +1,8 @@
-import { gql, useQuery } from '@apollo/client'
+import { useEffect, useRef, useState } from 'react'
 import type { NextPageWithLayout } from '@/pages/_app'
 import HTMLMetaTags from '@/components/HTMLMetaTags'
-import { useEffect, useRef, useState } from 'react'
-import { ApolloClient, InMemoryCache } from '@apollo/client'
-
 import TextareaAutosize from '@mui/base/TextareaAutosize'
+
 import client from '@/config/apolloClient'
 import { OPENAI_QUERY } from '@/queries/openaiQueries'
 
@@ -16,12 +14,14 @@ const Home: NextPageWithLayout = () => {
   const [copiedIndex, setCopiedIndex] = useState(-1)
 
   useEffect(() => {
+    // Scroll to last response when new response added
     lastResponseRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [responses.length])
 
   const handleSubmit = async (e: React.SyntheticEvent, index: number) => {
     e.preventDefault()
 
+    // Add context messages to track conversation
     let context
     if (
       responses.length >= 3 &&
@@ -40,22 +40,27 @@ const Home: NextPageWithLayout = () => {
       context = ''
     }
 
+    // Prompt is bottom input or a previous response
     const prompt = index === -1 ? input : responses[index]
-    const inputWithContext =
+    // Join prompt an context if any
+    const promptWithContext =
       context !== '' ? [context, prompt].join('\n') : prompt
 
+    // Make query
     const { data } = await client.query({
       query: OPENAI_QUERY,
-      variables: { input: inputWithContext },
+      variables: { prompt: promptWithContext },
     })
 
-    console.log(inputWithContext)
+    console.log(promptWithContext)
     console.log(data.generateText)
     const sanitizedResponse = data.generateText.replace(/^\s*[\r\n]{2}/, '')
 
     if (responses.length === 0) {
-      setResponses([prompt, sanitizedResponse])
+      // first prompt
+      setResponses([input, sanitizedResponse])
     } else if (index === -1) {
+      // input is the prompt
       setResponses([...responses, input, sanitizedResponse])
     } else {
       setResponses([...responses, sanitizedResponse])
@@ -115,13 +120,13 @@ const Home: NextPageWithLayout = () => {
             ))}
         </div>
 
-        <div className="chatbox-prompt">
+        <div className="chatbox-input-container">
           <form onSubmit={(e) => handleSubmit(e, -1)}>
             <label>
               <TextareaAutosize
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="chatbox-prompt--input"
+                className="chatbox-input--text"
                 maxRows={10}
                 minRows={1}
               />

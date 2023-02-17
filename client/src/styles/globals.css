@@ -73,7 +73,7 @@ main {
   outline: 2px solid #e2d592;
   cursor: text;
 }
-.chatbox-prompt {
+.chatbox-input-container {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -82,7 +82,7 @@ main {
   padding: 0.5rem;
 }
 
-.chatbox-prompt--input {
+.chatbox-input--text {
   width: 100%;
   resize: none;
   padding: 10px 16px;

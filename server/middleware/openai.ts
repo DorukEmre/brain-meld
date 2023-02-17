@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai'
 
-const getOpenAI = async (_: unknown, { input }: { input: string }) => {
+const getOpenAI = async (_: unknown, { prompt }: { prompt: string }) => {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   })
@@ -10,7 +10,7 @@ const getOpenAI = async (_: unknown, { input }: { input: string }) => {
   try {
     const result = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: input,
+      prompt,
       temperature: 0,
       max_tokens: 70,
     })
