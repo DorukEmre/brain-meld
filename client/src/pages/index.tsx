@@ -5,11 +5,8 @@ import { useEffect, useRef, useState } from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
 import TextareaAutosize from '@mui/base/TextareaAutosize'
-
-const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql',
-  cache: new InMemoryCache(),
-})
+import client from '@/config/apolloClient'
+import { OPENAI_QUERY } from '@/queries/openaiQueries'
 
 const Home: NextPageWithLayout = () => {
   const lastResponseRef = useRef<HTMLDivElement>(null)
@@ -48,11 +45,7 @@ const Home: NextPageWithLayout = () => {
       context !== '' ? [context, prompt].join('\n') : prompt
 
     const { data } = await client.query({
-      query: gql`
-        query OpenAIQuery($input: String!) {
-          generateText(input: $input)
-        }
-      `,
+      query: OPENAI_QUERY,
       variables: { input: inputWithContext },
     })
 
