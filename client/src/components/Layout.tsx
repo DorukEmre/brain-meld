@@ -11,7 +11,7 @@ export default function Layout({ children }: LayoutProps) {
     <>
       <HTMLMetaTags />
       <Header />
-      <main>{children}</main>
+      <main className="container">{children}</main>
     </>
   )
 }

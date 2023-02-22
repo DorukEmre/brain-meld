@@ -19,6 +19,13 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/Sidebar.jsx",
+    "src/components/tree/CustomNode.jsx",
+    "src/components/tree/AddDialog.jsx"
+  ],
   "exclude": ["node_modules"]
 }

@@ -40,6 +40,19 @@ header {
 main {
   padding: 1rem;
   background-color: hsl(0, 26%, 4%);
+  height: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.tree-nav {
+  width: 260px;
+  height: 100%;
+  color: antiquewhite;
+  background-color: hsl(310, 100%, 13%);
+  margin-bottom: 86px;
 }
 
 .chatbox-container {
@@ -74,7 +87,7 @@ main {
   cursor: text;
 }
 .chatbox-input-container {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
