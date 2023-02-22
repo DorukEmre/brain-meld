@@ -1,8 +1,9 @@
 .root {
+  position: relative;
   align-items: center;
   display: grid;
   grid-template-columns: auto auto 1fr auto auto;
-  height: 32px;
+  height: auto;
   padding-inline-end: 8px;
   width: 250px;
 }
@@ -29,4 +30,36 @@
 
 .actionButton {
   padding: 0 4px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+/*  */
+
+.inputWrapper {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: flex-start;
+  z-index: 100;
+  background-color: slateblue;
+  border-radius: 6px;
+}
+
+.textField input {
+  font-size: 14px;
+  padding: 8px;
+  color: antiquewhite;
+}
+
+.editIcon {
+  font-size: 20px;
+}
+
+.nodeInput {
+  width: 200px;
+}
+
+.nodeLabel {
+  padding-right: 15px;
 }

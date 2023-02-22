@@ -13,3 +13,12 @@
 .dropTarget {
   background-color: #e8f0fe;
 }
+
+.li:nth-child(even) {
+  background-color: hsl(310, 70%, 37%);
+  padding: 2px 0;
+}
+.li:nth-of-type(odd) {
+  background-color: hsl(310, 100%, 13%);
+  padding: 2px 0;
+}

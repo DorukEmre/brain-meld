@@ -56,5 +56,35 @@
       "fileType": "image",
       "fileSize": "0.8MB"
     }
+  },
+  {
+    "id": 8,
+    "parent": 5,
+    "droppable": false,
+    "text": "File 2-1-2",
+    "data": {
+      "fileType": "image",
+      "fileSize": "2.1MB"
+    }
+  },
+  {
+    "id": 9,
+    "parent": 5,
+    "droppable": false,
+    "text": "File 2-1-3",
+    "data": {
+      "fileType": "image",
+      "fileSize": "2.1MB"
+    }
+  },
+  {
+    "id": 10,
+    "parent": 5,
+    "droppable": false,
+    "text": "File 2-1-4",
+    "data": {
+      "fileType": "image",
+      "fileSize": "2.1MB"
+    }
   }
 ]

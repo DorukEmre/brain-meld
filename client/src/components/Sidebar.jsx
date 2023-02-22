@@ -34,6 +34,7 @@ function Sidebar(props) {
   }
 
   const handleOpenDialog = (node) => {
+    console.log(node)
     setSelectedFolderId(node.id)
     props.setOpen(true)
   }
@@ -41,6 +42,21 @@ function Sidebar(props) {
   const handleCloseDialog = () => {
     setSelectedFolderId(0)
     props.setOpen(false)
+  }
+
+  const handleTextChange = (id, value) => {
+    const newTree = props.treeData.map((node) => {
+      if (node.id === id) {
+        return {
+          ...node,
+          text: value,
+        }
+      }
+
+      return node
+    })
+
+    props.setTreeData(newTree)
   }
 
   return (
@@ -75,6 +91,7 @@ function Sidebar(props) {
                   {...options}
                   onDelete={handleDelete}
                   onAddFolder={() => handleOpenDialog(node)}
+                  onTextChange={handleTextChange}
                 />
               )}
               dragPreviewRender={(monitorProps) => (
@@ -85,6 +102,8 @@ function Sidebar(props) {
                 root: styles.treeRoot,
                 draggingSource: styles.draggingSource,
                 dropTarget: styles.dropTarget,
+                listItem: styles.li,
+                container: styles.ul,
               }}
             />
           </div>
