@@ -1,30 +1,38 @@
 import React, { useState } from 'react'
+
 import {
   Button,
   Select,
   TextField,
   MenuItem,
   FormControl,
-  FormControlLabel,
   InputLabel,
-  Checkbox,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
+  SelectChangeEvent,
 } from '@mui/material'
+import { NodeModel } from '@/types'
 import styles from './styles/AddDialog.module.css'
 
-export const AddDialog = (props) => {
-  const [text, setText] = useState('')
-  const [parent, setParent] = useState(props.selectedFolderId | 0)
+type Props = {
+  tree: NodeModel[]
+  onClose: () => void
+  onSubmit: (e: Omit<NodeModel, 'id'>) => void
+  selectedFolderId?: number
+  droppable: boolean | undefined
+}
 
-  const handleChangeText = (e) => {
+export const AddDialog: React.FC<Props> = (props) => {
+  const [text, setText] = useState('')
+  const [parent, setParent] = useState(props.selectedFolderId || 0)
+
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
   }
 
-  const handleChangeParent = (e) => {
-    console.log(e.target.value)
+  const handleChangeParent = (e: SelectChangeEvent<number>) => {
     setParent(Number(e.target.value))
   }
 

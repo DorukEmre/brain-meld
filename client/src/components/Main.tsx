@@ -31,7 +31,7 @@ const Main = () => {
   const [treeData, setTreeData] = useState<NodeModel<CustomData>[]>(SampleData)
 
   const handleSubmitAddNode = (newNode: Omit<NodeModel<CustomData>, 'id'>) => {
-    const lastId = getLastId(treeData) + 1
+    const lastId = Number(getLastId(treeData)) + 1
 
     setTreeData([
       ...treeData,

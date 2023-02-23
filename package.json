@@ -11,7 +11,8 @@
     "watch": "tsc -w",
     "server": "nodemon dist/index.js",
     "oldserver": "ts-node-esm server/index.ts",
-    "client": "npm run dev --prefix client"
+    "client": "npm run dev --prefix client",
+    "lint": "npm run lint --prefix client"
   },
   "author": "Doruk Emre",
   "license": "ISC",

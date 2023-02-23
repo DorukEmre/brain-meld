@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import { DndProvider } from 'react-dnd'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -9,6 +9,7 @@ import {
   DragLayerMonitorProps,
   getDescendants,
   getBackendOptions,
+  DropOptions,
 } from '@minoru/react-dnd-treeview'
 import { NodeModel, CustomData } from '@/types'
 import { CustomNode } from './tree/CustomNode'
@@ -17,11 +18,22 @@ import { AddDialog } from './tree/AddDialog'
 import { theme } from './tree/theme'
 import styles from '@/styles/Sidebar.module.css'
 
-function Sidebar(props) {
-  const [selectedFolderId, setSelectedFolderId] = useState(0)
-  const handleDrop = (newTree) => props.setTreeData(newTree)
+interface Props {
+  treeData: NodeModel<CustomData>[]
+  setTreeData: Dispatch<SetStateAction<NodeModel<CustomData>[]>>
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  handleSubmitAddNode: (newNode: Omit<NodeModel<CustomData>, 'id'>) => void
+}
 
-  const handleDelete = (id) => {
+function Sidebar(props: Props) {
+  const [selectedFolderId, setSelectedFolderId] = useState(0)
+  const handleDrop = (
+    newTree: NodeModel<CustomData>[],
+    options: DropOptions<CustomData>,
+  ) => props.setTreeData(newTree)
+
+  const handleDelete = (id: NodeModel['id']) => {
     const deleteIds = [
       id,
       ...getDescendants(props.treeData, id).map((node) => node.id),
@@ -33,9 +45,8 @@ function Sidebar(props) {
     props.setTreeData(newTree)
   }
 
-  const handleOpenDialog = (node) => {
-    console.log(node)
-    setSelectedFolderId(node.id)
+  const handleOpenDialog = (nodeId: number) => {
+    setSelectedFolderId(nodeId)
     props.setOpen(true)
   }
 
@@ -44,7 +55,7 @@ function Sidebar(props) {
     props.setOpen(false)
   }
 
-  const handleTextChange = (id, value) => {
+  const handleTextChange = (id: NodeModel['id'], value: string) => {
     const newTree = props.treeData.map((node) => {
       if (node.id === id) {
         return {
@@ -67,7 +78,7 @@ function Sidebar(props) {
           <div className={styles.app}>
             <div>
               <Button
-                onClick={handleOpenDialog}
+                onClick={() => handleOpenDialog(0)}
                 startIcon={<CreateNewFolderIcon />}
               >
                 Add Folder
@@ -76,6 +87,7 @@ function Sidebar(props) {
                 <AddDialog
                   tree={props.treeData}
                   onClose={handleCloseDialog}
+                  // @ts-ignore
                   onSubmit={props.handleSubmitAddNode}
                   droppable={true}
                   selectedFolderId={selectedFolderId}
@@ -90,7 +102,7 @@ function Sidebar(props) {
                   node={node}
                   {...options}
                   onDelete={handleDelete}
-                  onAddFolder={() => handleOpenDialog(node)}
+                  onAddFolder={() => handleOpenDialog(Number(node.id))}
                   onTextChange={handleTextChange}
                 />
               )}

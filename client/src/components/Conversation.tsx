@@ -13,10 +13,6 @@ interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>
   handleSubmitAddNode: (newNode: Omit<NodeModel<CustomData>, 'id'>) => void
 }
-// interface MyComponentProps {
-//   name: string;
-//   setName: (name: string) => void;
-// }
 
 const Conversation = (props: Props) => {
   const lastResponseRef = useRef<HTMLDivElement>(null)
@@ -111,6 +107,7 @@ const Conversation = (props: Props) => {
           <AddDialog
             tree={props.treeData}
             onClose={handleCloseDialog}
+            // @ts-ignore
             onSubmit={props.handleSubmitAddNode}
             droppable={false}
           />

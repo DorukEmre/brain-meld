@@ -14,7 +14,17 @@ import { NodeModel, CustomData } from '@/types'
 import { TypeIcon } from './TypeIcon'
 import styles from './styles/CustomNode.module.css'
 
-export const CustomNode = (props) => {
+type Props = {
+  node: NodeModel<CustomData>
+  depth: number
+  isOpen: boolean
+  onToggle: (id: string | number) => void
+  onDelete: (id: NodeModel['id']) => void
+  onTextChange: (id: NodeModel['id'], value: string) => void
+  onAddFolder: (id: string | number) => void
+}
+
+export const CustomNode: React.FC<Props> = (props) => {
   const { id, droppable, text, data } = props.node
 
   const [hover, setHover] = useState(false)
@@ -23,9 +33,9 @@ export const CustomNode = (props) => {
 
   const indent = props.depth * 24
 
-  const handleToggle = (e) => {
+  const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation()
-    props.onToggle(props.node.id)
+    props.onToggle(id)
   }
 
   const handleShowInput = () => {
@@ -38,7 +48,7 @@ export const CustomNode = (props) => {
     setHover(false)
   }
 
-  const handleChangeText = (e) => {
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLabelText(e.target.value)
   }
 
@@ -63,7 +73,7 @@ export const CustomNode = (props) => {
           props.isOpen ? styles.isOpen : ''
         }`}
       >
-        {props.node.droppable && (
+        {droppable && (
           <div onClick={handleToggle}>
             <ArrowRight />
           </div>
@@ -71,7 +81,7 @@ export const CustomNode = (props) => {
       </div>
       <div>
         {/* Folder-File icon */}
-        <TypeIcon droppable={droppable} fileType={data?.fileType} />
+        <TypeIcon droppable={droppable || false} fileType={data?.fileType} />
       </div>
 
       <>
@@ -97,12 +107,12 @@ export const CustomNode = (props) => {
         ) : (
           <>
             <div className={styles.labelGridItem}>
-              <Typography variant="body2">{props.node.text}</Typography>
+              <Typography variant="body2">{text}</Typography>
             </div>
             {hover && (
               <div className={styles.actionButton}>
                 {/* If a folder, show Add folder option */}
-                {props.node.droppable && (
+                {droppable && (
                   <IconButton
                     size="small"
                     onClick={() => props.onAddFolder(id)}
@@ -112,7 +122,7 @@ export const CustomNode = (props) => {
                 )}
                 {/* Show Delete and Edit options */}
                 <IconButton size="small" onClick={handleShowInput}>
-                  <EditIcon size="small" className={styles.editIcon} />
+                  <EditIcon fontSize="small" />
                 </IconButton>
                 <IconButton size="small" onClick={() => props.onDelete(id)}>
                   <Delete fontSize="small" />
