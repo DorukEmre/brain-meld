@@ -3,7 +3,7 @@ import TextareaAutosize from '@mui/base/TextareaAutosize'
 import { AddDialog } from '@/components/tree/AddDialog'
 
 import client from '@/config/apolloClient'
-import { OPENAI_QUERY } from '@/queries/openaiQueries'
+import { OPENAI_QUERY } from '@/graphql/openaiQueries'
 import { NodeModel, CustomData } from '@/types'
 
 interface Props {
