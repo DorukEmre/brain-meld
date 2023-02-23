@@ -16,4 +16,15 @@ const ADD_TREENODE = gql`
   }
 `
 
-export { ADD_TREENODE }
+const UPDATE_TREENODE = gql`
+  mutation UpdateTreeNode($id: Int!, $parent: Int!, $text: String!) {
+    updateTreeNode(id: $id, parent: $parent, text: $text) {
+      id
+      parent
+      droppable
+      text
+    }
+  }
+`
+
+export { ADD_TREENODE, UPDATE_TREENODE }

@@ -23,6 +23,8 @@ export const schema = createSchema({
         droppable: Boolean!
         text: String!
       ): TreeNode
+
+      updateTreeNode(id: Int!, parent: Int!, text: String!): TreeNode
     }
   `,
   resolvers: {
@@ -36,6 +38,18 @@ export const schema = createSchema({
         const treeNode = new TreeNode({ id, parent, droppable, text })
         await treeNode.save()
         return treeNode
+      },
+      updateTreeNode: async (_, { id, parent, text }) => {
+        return TreeNode.findOneAndUpdate(
+          { id },
+          {
+            $set: {
+              parent,
+              text,
+            },
+          },
+          { new: true },
+        )
       },
     },
   },

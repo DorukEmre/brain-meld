@@ -17,6 +17,9 @@ import { CustomDragPreview } from './tree/CustomDragPreview'
 import { AddDialog } from './tree/AddDialog'
 import { theme } from './tree/theme'
 import styles from '@/styles/Sidebar.module.css'
+import { useMutation } from '@apollo/client'
+import { UPDATE_TREENODE } from '@/graphql/treeMutations'
+import { GET_TREENODES } from '@/graphql/treeQueries'
 
 interface Props {
   treeData: NodeModel<CustomData>[]
@@ -28,10 +31,17 @@ interface Props {
 
 function Sidebar(props: Props) {
   const [selectedFolderId, setSelectedFolderId] = useState(0)
+
+  const [updateTreeNode] = useMutation(UPDATE_TREENODE, {
+    refetchQueries: [{ query: GET_TREENODES }],
+  })
+
   const handleDrop = (
     newTree: NodeModel<CustomData>[],
     options: DropOptions<CustomData>,
-  ) => props.setTreeData(newTree)
+  ) => {
+    return props.setTreeData(newTree)
+  }
 
   const handleDelete = (id: NodeModel['id']) => {
     const deleteIds = [
@@ -56,18 +66,17 @@ function Sidebar(props: Props) {
   }
 
   const handleTextChange = (id: NodeModel['id'], value: string) => {
-    const newTree = props.treeData.map((node) => {
-      if (node.id === id) {
-        return {
-          ...node,
+    const node = props.treeData.find((node) => node.id === id)
+
+    if (node) {
+      updateTreeNode({
+        variables: {
+          id,
+          parent: node.parent,
           text: value,
-        }
-      }
-
-      return node
-    })
-
-    props.setTreeData(newTree)
+        },
+      })
+    }
   }
 
   return (
