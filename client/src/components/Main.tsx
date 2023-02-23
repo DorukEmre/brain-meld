@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Sidebar from '@/components/Sidebar'
 import Conversation from '@/components/Conversation'
 
-import SampleData from '@/sample-data.json'
 import { NodeModel, CustomData } from '@/types'
+import { useMutation, useQuery } from '@apollo/client'
+import { GET_TREENODES } from '@/graphql/treeQueries'
+import { ADD_TREENODE } from '@/graphql/treeMutations'
 
 const getLastId = (treeData: NodeModel[]) => {
   const reversedArray = [...treeData].sort((a, b) => {
@@ -28,18 +30,31 @@ const Main = () => {
   const [openAddFolderModal, setOpenAddFolderModal] = useState(false)
   const [openAddFileModal, setOpenAddFileModal] = useState(false)
 
-  const [treeData, setTreeData] = useState<NodeModel<CustomData>[]>(SampleData)
+  const [treeData, setTreeData] = useState<NodeModel<CustomData>[]>([])
+
+  const { loading, error, data } = useQuery(GET_TREENODES)
+
+  useEffect(() => {
+    if (data) {
+      setTreeData(data.allTreeNodes)
+    }
+  }, [data])
+
+  const [addTreeNode] = useMutation(ADD_TREENODE, {
+    refetchQueries: [{ query: GET_TREENODES }],
+  })
 
   const handleSubmitAddNode = (newNode: Omit<NodeModel<CustomData>, 'id'>) => {
-    const lastId = Number(getLastId(treeData)) + 1
+    const nextId = Number(getLastId(treeData)) + 1
 
-    setTreeData([
-      ...treeData,
-      {
-        ...newNode,
-        id: lastId,
+    addTreeNode({
+      variables: {
+        id: nextId,
+        parent: newNode.parent,
+        droppable: newNode.droppable,
+        text: newNode.text,
       },
-    ])
+    })
 
     setOpenAddFolderModal(false)
     setOpenAddFileModal(false)
@@ -49,21 +64,26 @@ const Main = () => {
     treeData,
     setTreeData,
     handleSubmitAddNode,
-
-    // ownProfile: props.ownProfile ? props.ownProfile : false,
   }
+
   return (
     <>
-      <Sidebar
-        open={openAddFolderModal}
-        setOpen={setOpenAddFolderModal}
-        {...componentProps}
-      />
-      <Conversation
-        open={openAddFileModal}
-        setOpen={setOpenAddFileModal}
-        {...componentProps}
-      />
+      {loading || error ? (
+        <p>{loading ? 'Loading' : 'Error'}...</p>
+      ) : (
+        <>
+          <Sidebar
+            open={openAddFolderModal}
+            setOpen={setOpenAddFolderModal}
+            {...componentProps}
+          />
+          <Conversation
+            open={openAddFileModal}
+            setOpen={setOpenAddFileModal}
+            {...componentProps}
+          />
+        </>
+      )}
     </>
   )
 }
