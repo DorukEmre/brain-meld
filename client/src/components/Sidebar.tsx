@@ -40,7 +40,31 @@ function Sidebar(props: Props) {
     newTree: NodeModel<CustomData>[],
     options: DropOptions<CustomData>,
   ) => {
-    return props.setTreeData(newTree)
+    const node = props.treeData.find((node) => node.id === options.dragSourceId)
+
+    if (node) {
+      updateTreeNode({
+        variables: {
+          id: node.id,
+          parent: options.dropTargetId,
+          text: node.text,
+        },
+      })
+    }
+  }
+
+  const handleTextChange = (id: NodeModel['id'], value: string) => {
+    const node = props.treeData.find((node) => node.id === id)
+
+    if (node) {
+      updateTreeNode({
+        variables: {
+          id,
+          parent: node.parent,
+          text: value,
+        },
+      })
+    }
   }
 
   const handleDelete = (id: NodeModel['id']) => {
@@ -63,20 +87,6 @@ function Sidebar(props: Props) {
   const handleCloseDialog = () => {
     setSelectedFolderId(0)
     props.setOpen(false)
-  }
-
-  const handleTextChange = (id: NodeModel['id'], value: string) => {
-    const node = props.treeData.find((node) => node.id === id)
-
-    if (node) {
-      updateTreeNode({
-        variables: {
-          id,
-          parent: node.parent,
-          text: value,
-        },
-      })
-    }
   }
 
   return (
