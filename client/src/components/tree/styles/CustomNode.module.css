@@ -24,8 +24,13 @@
   transform: rotate(90deg);
 }
 
+.typeIconWrapper {
+  cursor: move;
+}
+
 .labelGridItem {
   padding-inline-start: 8px;
+  cursor: pointer;
 }
 
 .actionButton {

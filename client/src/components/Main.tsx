@@ -53,6 +53,7 @@ const Main = () => {
         parent: newNode.parent,
         droppable: newNode.droppable,
         text: newNode.text,
+        body: newNode.data?.body,
       },
     })
 

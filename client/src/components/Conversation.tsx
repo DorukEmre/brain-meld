@@ -18,6 +18,10 @@ const Conversation = (props: Props) => {
   const lastResponseRef = useRef<HTMLDivElement>(null)
   const [input, setInput] = useState('')
   const [responses, setResponses] = useState<string[]>([])
+  const [selectedResponse, setSelectedResponse] = useState({
+    response: '',
+    index: 0,
+  })
   const [isCopied, setIsCopied] = useState(false)
   const [copiedIndex, setCopiedIndex] = useState(-1)
 
@@ -77,19 +81,17 @@ const Conversation = (props: Props) => {
     setInput('')
   }
 
-  const handleOpenDialog = () => {
+  const handleOpenDialog = (response: string, index: number) => {
+    setSelectedResponse({ response, index })
     props.setOpen(true)
   }
 
   const handleCloseDialog = () => {
+    setSelectedResponse({ response: '', index: 0 })
     props.setOpen(false)
   }
 
-  const handleSave = (e: React.SyntheticEvent, index: number) => {
-    handleOpenDialog()
-  }
-
-  const handleCopyText = (e: React.SyntheticEvent, index: number) => {
+  const handleCopyText = (index: number) => {
     navigator.clipboard.writeText(responses[index]).then(() => {
       setIsCopied(true)
       setCopiedIndex(index)
@@ -110,6 +112,7 @@ const Conversation = (props: Props) => {
             // @ts-ignore
             onSubmit={props.handleSubmitAddNode}
             droppable={false}
+            selectedResponse={selectedResponse}
           />
         )}
       </div>
@@ -130,19 +133,16 @@ const Conversation = (props: Props) => {
                       maxRows={20}
                       minRows={1}
                       cols={50}
-                      // ref={
-                      //   index === responses.length - 1 ? lastResponseRef : null
-                      // }
                     />
                   </label>
                   <button type="submit">Generate</button>
-                  <button type="button" onClick={(e) => handleSave(e, index)}>
-                    Save
-                  </button>
                   <button
                     type="button"
-                    onClick={(e) => handleCopyText(e, index)}
+                    onClick={() => handleOpenDialog(response, index)}
                   >
+                    Save
+                  </button>
+                  <button type="button" onClick={() => handleCopyText(index)}>
                     {isCopied && index === copiedIndex
                       ? 'Copied!'
                       : 'Copy Text'}

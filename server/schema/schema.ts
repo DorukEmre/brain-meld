@@ -11,6 +11,7 @@ export const schema = createSchema({
       parent: Int!
       droppable: Boolean!
       text: String!
+      body: String
     }
     type Query {
       generateText(prompt: String!): String
@@ -22,6 +23,7 @@ export const schema = createSchema({
         parent: Int!
         droppable: Boolean!
         text: String!
+        body: String
       ): TreeNode
 
       updateTreeNode(id: Int!, parent: Int!, text: String!): TreeNode
@@ -36,8 +38,8 @@ export const schema = createSchema({
       allTreeNodes: () => TreeNode.find(),
     },
     Mutation: {
-      addTreeNode: async (_, { id, parent, droppable, text }) => {
-        const treeNode = new TreeNode({ id, parent, droppable, text })
+      addTreeNode: async (_, { id, parent, droppable, text, body }) => {
+        const treeNode = new TreeNode({ id, parent, droppable, text, body })
         await treeNode.save()
         return treeNode
       },

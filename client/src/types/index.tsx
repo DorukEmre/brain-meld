@@ -1,5 +1,6 @@
 export type CustomData = {
-  fileType: string
+  // fileType: string
+  body: string
 }
 
 export type NodeModel<T = unknown> = {
@@ -7,5 +8,5 @@ export type NodeModel<T = unknown> = {
   parent: number | string
   droppable?: boolean
   text: string
-  // data?: T
+  data?: T
 }

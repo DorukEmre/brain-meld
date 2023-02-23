@@ -80,7 +80,7 @@ export const CustomNode: React.FC<Props> = (props) => {
           </div>
         )}
       </div>
-      <div>
+      <div className={styles.typeIconWrapper}>
         {/* Folder-File icon */}
         <TypeIcon
           droppable={droppable ? droppable : false}

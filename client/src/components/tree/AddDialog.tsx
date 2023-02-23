@@ -21,6 +21,10 @@ type Props = {
   onClose: () => void
   onSubmit: (e: Omit<NodeModel, 'id'>) => void
   selectedFolderId?: number
+  selectedResponse?: {
+    response: string
+    index: number
+  }
   droppable: boolean | undefined
 }
 
@@ -74,6 +78,7 @@ export const AddDialog: React.FC<Props> = (props) => {
               text,
               parent,
               droppable: props.droppable,
+              data: { body: props.selectedResponse?.response },
               // data: { fileType: 'text' },
             })
           }

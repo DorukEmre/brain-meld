@@ -5,6 +5,7 @@ const TreeNodeSchema = new mongoose.Schema({
   parent: { type: Number },
   droppable: { type: Boolean },
   text: { type: String },
+  body: { type: String },
 })
 
 export default mongoose.model('TreeNode', TreeNodeSchema)

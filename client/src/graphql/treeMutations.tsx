@@ -6,12 +6,20 @@ const ADD_TREENODE = gql`
     $parent: Int!
     $droppable: Boolean!
     $text: String!
+    $body: String
   ) {
-    addTreeNode(id: $id, parent: $parent, droppable: $droppable, text: $text) {
+    addTreeNode(
+      id: $id
+      parent: $parent
+      droppable: $droppable
+      text: $text
+      body: $body
+    ) {
       id
       parent
       droppable
       text
+      body
     }
   }
 `
