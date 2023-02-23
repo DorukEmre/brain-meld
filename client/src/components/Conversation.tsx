@@ -104,7 +104,7 @@ const Conversation = (props: Props) => {
 
   return (
     <>
-      <div>
+      <>
         {props.open && (
           <AddDialog
             tree={props.treeData}
@@ -115,7 +115,7 @@ const Conversation = (props: Props) => {
             selectedResponse={selectedResponse}
           />
         )}
-      </div>
+      </>
       <div className="chatbox-container">
         <div className="chatbox-conversation">
           {responses.length > 0 &&

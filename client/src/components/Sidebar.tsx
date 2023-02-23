@@ -92,67 +92,69 @@ function Sidebar(props: Props) {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-        <nav className="tree-nav">
-          <div className={styles.app}>
-            <div>
-              <Button
-                fullWidth={true}
-                variant="outlined"
-                onClick={props.handleNewChat}
-              >
-                New Chat
-              </Button>
+    <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+          <nav className="tree-nav">
+            <div className={styles.app}>
+              <div>
+                <Button
+                  fullWidth={true}
+                  variant="outlined"
+                  onClick={props.handleNewChat}
+                >
+                  New Chat
+                </Button>
+              </div>
+              <div>
+                <Button
+                  onClick={() => handleOpenDialog(0)}
+                  startIcon={<CreateNewFolderIcon />}
+                >
+                  Add Folder
+                </Button>
+                {props.open && (
+                  <AddDialog
+                    tree={props.treeData}
+                    onClose={handleCloseDialog}
+                    // @ts-ignore
+                    onSubmit={props.handleSubmitAddNode}
+                    droppable={true}
+                    selectedFolderId={selectedFolderId}
+                  />
+                )}
+              </div>
+              <Tree
+                tree={props.treeData}
+                rootId={0}
+                render={(node, options) => (
+                  <CustomNode
+                    node={node}
+                    {...options}
+                    onDelete={handleDelete}
+                    onAddFolder={() => handleOpenDialog(Number(node.id))}
+                    onTextChange={handleTextChange}
+                    handleSelectNode={() => props.handleSelectNode(node.id)}
+                  />
+                )}
+                dragPreviewRender={(monitorProps) => (
+                  <CustomDragPreview monitorProps={monitorProps} />
+                )}
+                onDrop={handleDrop}
+                classes={{
+                  root: styles.treeRoot,
+                  draggingSource: styles.draggingSource,
+                  dropTarget: styles.dropTarget,
+                  listItem: styles.li,
+                  container: styles.ul,
+                }}
+              />
             </div>
-            <div>
-              <Button
-                onClick={() => handleOpenDialog(0)}
-                startIcon={<CreateNewFolderIcon />}
-              >
-                Add Folder
-              </Button>
-              {props.open && (
-                <AddDialog
-                  tree={props.treeData}
-                  onClose={handleCloseDialog}
-                  // @ts-ignore
-                  onSubmit={props.handleSubmitAddNode}
-                  droppable={true}
-                  selectedFolderId={selectedFolderId}
-                />
-              )}
-            </div>
-            <Tree
-              tree={props.treeData}
-              rootId={0}
-              render={(node, options) => (
-                <CustomNode
-                  node={node}
-                  {...options}
-                  onDelete={handleDelete}
-                  onAddFolder={() => handleOpenDialog(Number(node.id))}
-                  onTextChange={handleTextChange}
-                  handleSelectNode={() => props.handleSelectNode(node.id)}
-                />
-              )}
-              dragPreviewRender={(monitorProps) => (
-                <CustomDragPreview monitorProps={monitorProps} />
-              )}
-              onDrop={handleDrop}
-              classes={{
-                root: styles.treeRoot,
-                draggingSource: styles.draggingSource,
-                dropTarget: styles.dropTarget,
-                listItem: styles.li,
-                container: styles.ul,
-              }}
-            />
-          </div>
-        </nav>
-      </DndProvider>
-    </ThemeProvider>
+          </nav>
+        </DndProvider>
+      </ThemeProvider>
+    </>
   )
 }
 
