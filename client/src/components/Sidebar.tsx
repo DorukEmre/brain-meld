@@ -18,7 +18,7 @@ import { AddDialog } from './tree/AddDialog'
 import { theme } from './tree/theme'
 import styles from '@/styles/Sidebar.module.css'
 import { useMutation } from '@apollo/client'
-import { UPDATE_TREENODE } from '@/graphql/treeMutations'
+import { DELETE_TREENODE, UPDATE_TREENODE } from '@/graphql/treeMutations'
 import { GET_TREENODES } from '@/graphql/treeQueries'
 
 interface Props {
@@ -33,6 +33,10 @@ function Sidebar(props: Props) {
   const [selectedFolderId, setSelectedFolderId] = useState(0)
 
   const [updateTreeNode] = useMutation(UPDATE_TREENODE, {
+    refetchQueries: [{ query: GET_TREENODES }],
+  })
+
+  const [deleteTreeNode] = useMutation(DELETE_TREENODE, {
     refetchQueries: [{ query: GET_TREENODES }],
   })
 
@@ -68,15 +72,11 @@ function Sidebar(props: Props) {
   }
 
   const handleDelete = (id: NodeModel['id']) => {
-    const deleteIds = [
-      id,
-      ...getDescendants(props.treeData, id).map((node) => node.id),
-    ]
-    const newTree = props.treeData.filter(
-      (node) => !deleteIds.includes(node.id),
-    )
-
-    props.setTreeData(newTree)
+    deleteTreeNode({
+      variables: {
+        id,
+      },
+    })
   }
 
   const handleOpenDialog = (nodeId: number) => {

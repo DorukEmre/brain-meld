@@ -27,4 +27,12 @@ const UPDATE_TREENODE = gql`
   }
 `
 
-export { ADD_TREENODE, UPDATE_TREENODE }
+const DELETE_TREENODE = gql`
+  mutation DeleteTreeNode($id: Int!) {
+    deleteTreeNode(id: $id) {
+      id
+    }
+  }
+`
+
+export { ADD_TREENODE, UPDATE_TREENODE, DELETE_TREENODE }

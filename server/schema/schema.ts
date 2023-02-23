@@ -25,6 +25,8 @@ export const schema = createSchema({
       ): TreeNode
 
       updateTreeNode(id: Int!, parent: Int!, text: String!): TreeNode
+
+      deleteTreeNode(id: Int!): TreeNode
     }
   `,
   resolvers: {
@@ -50,6 +52,12 @@ export const schema = createSchema({
           },
           { new: true },
         )
+      },
+      deleteTreeNode: async (_, { id }) => {
+        // Delete all nodes that have this node id for parent
+        await TreeNode.deleteMany({ parent: id })
+        // Delete node with this id
+        return TreeNode.findOneAndDelete({ id })
       },
     },
   },
