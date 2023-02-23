@@ -41,6 +41,7 @@ main {
   padding: 1rem;
   background-color: hsl(0, 26%, 4%);
   height: 100%;
+  color: antiquewhite;
 }
 .container {
   display: flex;

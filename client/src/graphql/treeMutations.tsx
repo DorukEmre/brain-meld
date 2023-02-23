@@ -13,13 +13,15 @@ const ADD_TREENODE = gql`
       parent: $parent
       droppable: $droppable
       text: $text
-      body: $body
+      data: { body: $body }
     ) {
       id
       parent
       droppable
       text
-      body
+      data {
+        body
+      }
     }
   }
 `

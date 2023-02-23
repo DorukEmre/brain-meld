@@ -25,7 +25,7 @@
 }
 
 .typeIconWrapper {
-  cursor: move;
+  cursor: grab;
 }
 
 .labelGridItem {

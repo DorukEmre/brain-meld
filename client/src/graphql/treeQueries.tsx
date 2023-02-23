@@ -7,6 +7,9 @@ const GET_TREENODES = gql`
       parent
       droppable
       text
+      data {
+        body
+      }
     }
   }
 `

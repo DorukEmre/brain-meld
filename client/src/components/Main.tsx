@@ -7,6 +7,8 @@ import { NodeModel, CustomData } from '@/types'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_TREENODES } from '@/graphql/treeQueries'
 import { ADD_TREENODE } from '@/graphql/treeMutations'
+import SelectedPrompt from './SelectedPrompt'
+import SelectedFolder from './SelectedFolder'
 
 const getLastId = (treeData: NodeModel[]) => {
   const reversedArray = [...treeData].sort((a, b) => {
@@ -27,6 +29,13 @@ const getLastId = (treeData: NodeModel[]) => {
 }
 
 const Main = () => {
+  const [node, setNode] = useState<NodeModel<CustomData>>({
+    id: 1,
+    parent: 0,
+    droppable: false,
+    text: '',
+  })
+  const [nodeSelected, setNodeSelected] = useState(false)
   const [openAddFolderModal, setOpenAddFolderModal] = useState(false)
   const [openAddFileModal, setOpenAddFileModal] = useState(false)
 
@@ -61,6 +70,17 @@ const Main = () => {
     setOpenAddFileModal(false)
   }
 
+  const handleSelectNode = (id: NodeModel['id']) => {
+    setNodeSelected(true)
+    const node = treeData.find((node) => node.id === id)
+    setNode(node!)
+    console.log(node)
+  }
+
+  const handleNewChat = () => {
+    setNodeSelected(false)
+  }
+
   let componentProps = {
     treeData,
     setTreeData,
@@ -76,13 +96,23 @@ const Main = () => {
           <Sidebar
             open={openAddFolderModal}
             setOpen={setOpenAddFolderModal}
+            handleSelectNode={handleSelectNode}
+            handleNewChat={handleNewChat}
             {...componentProps}
           />
-          <Conversation
-            open={openAddFileModal}
-            setOpen={setOpenAddFileModal}
-            {...componentProps}
-          />
+          {nodeSelected ? (
+            node.droppable ? (
+              <SelectedFolder node={node} />
+            ) : (
+              <SelectedPrompt node={node} />
+            )
+          ) : (
+            <Conversation
+              open={openAddFileModal}
+              setOpen={setOpenAddFileModal}
+              {...componentProps}
+            />
+          )}
         </>
       )}
     </>

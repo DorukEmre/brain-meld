@@ -27,6 +27,8 @@ interface Props {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   handleSubmitAddNode: (newNode: Omit<NodeModel<CustomData>, 'id'>) => void
+  handleSelectNode: (id: NodeModel['id']) => void
+  handleNewChat: () => void
 }
 
 function Sidebar(props: Props) {
@@ -97,6 +99,15 @@ function Sidebar(props: Props) {
           <div className={styles.app}>
             <div>
               <Button
+                fullWidth={true}
+                variant="outlined"
+                onClick={props.handleNewChat}
+              >
+                New Chat
+              </Button>
+            </div>
+            <div>
+              <Button
                 onClick={() => handleOpenDialog(0)}
                 startIcon={<CreateNewFolderIcon />}
               >
@@ -123,6 +134,7 @@ function Sidebar(props: Props) {
                   onDelete={handleDelete}
                   onAddFolder={() => handleOpenDialog(Number(node.id))}
                   onTextChange={handleTextChange}
+                  handleSelectNode={() => props.handleSelectNode(node.id)}
                 />
               )}
               dragPreviewRender={(monitorProps) => (

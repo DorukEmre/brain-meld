@@ -18,10 +18,11 @@ type Props = {
   node: NodeModel<CustomData>
   depth: number
   isOpen: boolean
-  onToggle: (id: string | number) => void
+  onToggle: (id: NodeModel['id']) => void
   onDelete: (id: NodeModel['id']) => void
   onTextChange: (id: NodeModel['id'], value: string) => void
-  onAddFolder: (id: string | number) => void
+  onAddFolder: (id: NodeModel['id']) => void
+  handleSelectNode: (id: NodeModel['id']) => void
 }
 
 export const CustomNode: React.FC<Props> = (props) => {
@@ -111,7 +112,15 @@ export const CustomNode: React.FC<Props> = (props) => {
         ) : (
           <>
             <div className={styles.labelGridItem}>
-              <Typography variant="body2">{text}</Typography>
+              <Typography
+                variant="body2"
+                onClick={(e) => {
+                  handleToggle(e)
+                  props.handleSelectNode(id)
+                }}
+              >
+                {text}
+              </Typography>
             </div>
             {hover && (
               <div className={styles.actionButton}>
