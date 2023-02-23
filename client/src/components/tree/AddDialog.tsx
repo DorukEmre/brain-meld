@@ -74,9 +74,7 @@ export const AddDialog: React.FC<Props> = (props) => {
               text,
               parent,
               droppable: props.droppable,
-              data: {
-                fileType: 'text',
-              },
+              // data: { fileType: 'text' },
             })
           }
         >

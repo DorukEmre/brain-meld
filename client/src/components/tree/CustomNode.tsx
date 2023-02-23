@@ -25,7 +25,8 @@ type Props = {
 }
 
 export const CustomNode: React.FC<Props> = (props) => {
-  const { id, droppable, text, data } = props.node
+  // const { id, droppable, text, data } = props.node
+  const { id, droppable, text } = props.node
 
   const [hover, setHover] = useState(false)
   const [visibleInput, setVisibleInput] = useState(false)
@@ -81,7 +82,10 @@ export const CustomNode: React.FC<Props> = (props) => {
       </div>
       <div>
         {/* Folder-File icon */}
-        <TypeIcon droppable={droppable || false} fileType={data?.fileType} />
+        <TypeIcon
+          droppable={droppable ? droppable : false}
+          // fileType={data?.fileType}
+        />
       </div>
 
       <>

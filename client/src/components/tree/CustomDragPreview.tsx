@@ -16,7 +16,7 @@ export const CustomDragPreview: React.FC<Props> = (props) => {
       <div className={styles.icon}>
         <TypeIcon
           droppable={item.droppable ? item.droppable : false}
-          fileType={item?.data?.fileType}
+          // fileType={item?.data?.fileType}
         />
       </div>
       <div className={styles.label}>{item.text}</div>

@@ -7,5 +7,5 @@ export type NodeModel<T = unknown> = {
   parent: number | string
   droppable?: boolean
   text: string
-  data?: T
+  // data?: T
 }
