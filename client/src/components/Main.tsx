@@ -83,6 +83,10 @@ const Main = () => {
     setResponses([])
   }
 
+  const handlePreviousChat = () => {
+    setNodeSelected(false)
+  }
+
   let componentProps = {
     treeData,
     setTreeData,
@@ -99,7 +103,10 @@ const Main = () => {
             open={openAddFolderModal}
             setOpen={setOpenAddFolderModal}
             handleSelectNode={handleSelectNode}
+            nodeSelected={nodeSelected}
+            isResponses={responses.length > 0}
             handleNewChat={handleNewChat}
+            handlePreviousChat={handlePreviousChat}
             {...componentProps}
           />
           {nodeSelected ? (

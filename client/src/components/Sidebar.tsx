@@ -28,7 +28,10 @@ interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>
   handleSubmitAddNode: (newNode: Omit<NodeModel<CustomData>, 'id'>) => void
   handleSelectNode: (id: NodeModel['id']) => void
+  nodeSelected: boolean
+  isResponses: boolean
   handleNewChat: () => void
+  handlePreviousChat: () => void
 }
 
 function Sidebar(props: Props) {
@@ -100,12 +103,19 @@ function Sidebar(props: Props) {
             <div className={styles.app}>
               <div>
                 <Button
-                  fullWidth={true}
+                  fullWidth={
+                    props.nodeSelected && props.isResponses ? false : true
+                  }
                   variant="outlined"
                   onClick={props.handleNewChat}
                 >
                   New Chat
                 </Button>
+                {props.nodeSelected && props.isResponses && (
+                  <Button variant="outlined" onClick={props.handlePreviousChat}>
+                    Previous Chat
+                  </Button>
+                )}
               </div>
               <div>
                 <Button
