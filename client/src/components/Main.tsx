@@ -71,9 +71,11 @@ const Main = () => {
   }
 
   const handleSelectNode = (id: NodeModel['id']) => {
-    setNodeSelected(true)
     const node = treeData.find((node) => node.id === id)
+
     setNode(node!)
+    setNodeSelected(true)
+
     console.log(node)
   }
 

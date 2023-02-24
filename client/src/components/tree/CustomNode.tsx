@@ -8,6 +8,7 @@ import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
 import { ArrowRight, Delete } from '@mui/icons-material'
+import PreviewIcon from '@mui/icons-material/Preview'
 
 import { useDragOver } from '@minoru/react-dnd-treeview'
 import { NodeModel, CustomData } from '@/types'
@@ -116,7 +117,9 @@ export const CustomNode: React.FC<Props> = (props) => {
                 variant="body2"
                 onClick={(e) => {
                   handleToggle(e)
-                  props.handleSelectNode(id)
+                  if (!droppable) {
+                    props.handleSelectNode(id)
+                  }
                 }}
               >
                 {text}
@@ -126,12 +129,20 @@ export const CustomNode: React.FC<Props> = (props) => {
               <div className={styles.actionButton}>
                 {/* If a folder, show Add folder option */}
                 {droppable && (
-                  <IconButton
-                    size="small"
-                    onClick={() => props.onAddFolder(id)}
-                  >
-                    <CreateNewFolderIcon fontSize="small" />
-                  </IconButton>
+                  <>
+                    <IconButton
+                      size="small"
+                      onClick={() => props.handleSelectNode(id)}
+                    >
+                      <PreviewIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => props.onAddFolder(id)}
+                    >
+                      <CreateNewFolderIcon fontSize="small" />
+                    </IconButton>
+                  </>
                 )}
                 {/* Show Delete and Edit options */}
                 <IconButton size="small" onClick={handleShowInput}>
