@@ -5,12 +5,13 @@ interface Props {
 }
 
 const SelectedPrompt = (props: Props) => {
-  console.log(props.node)
+  const { node } = props
+  console.log(node)
+
   return (
     <div>
-      <h1>SelectedPrompt</h1>
-      <h2>{props.node.text}</h2>
-      <p>{props.node.data?.body}</p>
+      <h1>{node.text}</h1>
+      <p>{node.data?.body}</p>
     </div>
   )
 }

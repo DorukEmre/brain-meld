@@ -76,8 +76,6 @@ const Main = () => {
 
     setNode(node!)
     setNodeSelected(true)
-
-    console.log(node)
   }
 
   const handleNewChat = () => {
@@ -106,7 +104,7 @@ const Main = () => {
           />
           {nodeSelected ? (
             node.droppable ? (
-              <SelectedFolder node={node} />
+              <SelectedFolder node={node} treeData={treeData} />
             ) : (
               <SelectedPrompt node={node} />
             )
