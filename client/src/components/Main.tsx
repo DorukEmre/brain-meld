@@ -29,6 +29,7 @@ const getLastId = (treeData: NodeModel[]) => {
 }
 
 const Main = () => {
+  const [responses, setResponses] = useState<string[]>([])
   const [node, setNode] = useState<NodeModel<CustomData>>({
     id: 1,
     parent: 0,
@@ -81,6 +82,7 @@ const Main = () => {
 
   const handleNewChat = () => {
     setNodeSelected(false)
+    setResponses([])
   }
 
   let componentProps = {
@@ -112,6 +114,8 @@ const Main = () => {
             <Conversation
               open={openAddFileModal}
               setOpen={setOpenAddFileModal}
+              responses={responses}
+              setResponses={setResponses}
               {...componentProps}
             />
           )}

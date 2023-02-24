@@ -12,12 +12,14 @@ interface Props {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   handleSubmitAddNode: (newNode: Omit<NodeModel<CustomData>, 'id'>) => void
+  responses: string[]
+  setResponses: Dispatch<SetStateAction<string[]>>
 }
 
 const Conversation = (props: Props) => {
+  const { responses, setResponses } = props
   const lastResponseRef = useRef<HTMLDivElement>(null)
   const [input, setInput] = useState('')
-  const [responses, setResponses] = useState<string[]>([])
   const [selectedResponse, setSelectedResponse] = useState({
     response: '',
     index: 0,
