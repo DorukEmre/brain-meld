@@ -1,11 +1,15 @@
+import { useSession, signIn, signOut } from 'next-auth/react'
+
 import HTMLMetaTags from '@/components/HTMLMetaTags'
 import Explorer from '@/components/Explorer'
 
 const Home = () => {
+  const { data: session } = useSession()
+
   return (
     <>
       <HTMLMetaTags />
-      <Explorer />
+      {session ? <Explorer /> : <p>Not signed in</p>}
     </>
   )
 }
