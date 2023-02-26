@@ -1,16 +1,13 @@
-import type { NextPageWithLayout } from '@/pages/_app'
 import HTMLMetaTags from '@/components/HTMLMetaTags'
-import Main from '@/components/Main'
+import Explorer from '@/components/Explorer'
 
-const Home: NextPageWithLayout = () => {
+const Home = () => {
   return (
     <>
       <HTMLMetaTags />
-      <Main />
+      <Explorer />
     </>
   )
 }
-
-// Home.getLayout = (page) => page
 
 export default Home
