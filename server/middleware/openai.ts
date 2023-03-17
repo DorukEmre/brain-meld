@@ -10,7 +10,7 @@ const getOpenAI = async (
 
   const openai = new OpenAIApi(configuration)
 
-  console.log(input)
+  // console.log(input)
 
   try {
     const completion = await openai.createChatCompletion({
@@ -18,7 +18,7 @@ const getOpenAI = async (
       messages: input,
     })
 
-    console.log(completion.data.choices[0].message)
+    // console.log(completion.data.choices[0].message)
     return completion.data.choices[0].message
   } catch (error) {
     console.error(error)

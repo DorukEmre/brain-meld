@@ -5,6 +5,7 @@ import { AddDialog } from '@/components/tree/AddDialog'
 import client from '@/config/apolloClient'
 import { OPENAI_QUERY } from '@/graphql/openaiQueries'
 import { NodeModel, CustomData } from '@/types'
+import { ChatCompletionRequestMessage } from 'openai/dist/api'
 
 interface Props {
   treeData: NodeModel<CustomData>[]
@@ -12,89 +13,66 @@ interface Props {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   handleSubmitAddNode: (newNode: Omit<NodeModel<CustomData>, 'id'>) => void
-  responses: string[]
-  setResponses: Dispatch<SetStateAction<string[]>>
+  responses: ChatCompletionRequestMessage[]
+  setResponses: Dispatch<SetStateAction<ChatCompletionRequestMessage[]>>
 }
 
 const Conversation = (props: Props) => {
   const { responses, setResponses } = props
   const lastResponseRef = useRef<HTMLDivElement>(null)
-  const [input, setInput] = useState('')
-  const [selectedResponse, setSelectedResponse] = useState({
-    response: '',
-    index: 0,
-  })
+  const [mainInput, setMainInput] = useState('')
+  const [selectedResponse, setSelectedResponse] = useState('')
   const [isCopied, setIsCopied] = useState(false)
   const [copiedIndex, setCopiedIndex] = useState(-1)
 
   useEffect(() => {
     // Scroll to last response when new response added
     lastResponseRef.current?.scrollIntoView({ behavior: 'smooth' })
+    // console.log('responses: ', responses)
   }, [responses.length])
 
   const handleGenerate = async (e: React.SyntheticEvent, index: number) => {
     e.preventDefault()
 
-    // Add context messages to track conversation
-    let context
-    if (
-      responses.length >= 3 &&
-      index !== responses.length - 1 &&
-      index !== responses.length - 2
-    ) {
-      context = responses.slice(-2).join('\n')
-    } else if (
-      responses.length >= 3 &&
-      (index === responses.length - 1 || index === responses.length - 2)
-    ) {
-      context = [responses[index - 2], responses[index - 1]].join('\n')
-    } else if (responses.length === 2 && index === 1) {
-      context = responses[0]
+    // If Generate from input at bottom, add it to the end of the responses array
+    // If Generate from any other response, truncate up till that response
+    let messages: ChatCompletionRequestMessage[]
+    if (index === -1) {
+      messages = [...responses, { role: 'user', content: mainInput }]
     } else {
-      context = ''
+      messages = responses.slice(0, index + 1)
     }
 
-    // Prompt is bottom input or a previous response
-    const prompt = index === -1 ? input : responses[index]
-    // Join prompt an context if any
-    const promptWithContext =
-      context !== '' ? [context, prompt].join('\n') : prompt
+    // console.log('messages: ', messages)
 
     // Make query
     const { data } = await client.query({
       query: OPENAI_QUERY,
-      variables: { prompt: promptWithContext },
+      variables: { messages: messages },
     })
 
-    console.log(promptWithContext)
-    console.log(data.generateText)
-    const sanitizedResponse = data.generateText.replace(/^\s*[\r\n]{2}/, '')
+    // console.log(data.generateText)
 
-    if (responses.length === 0) {
-      // first prompt
-      setResponses([input, sanitizedResponse])
-    } else if (index === -1) {
-      // input is the prompt
-      setResponses([...responses, input, sanitizedResponse])
-    } else {
-      setResponses([...responses, sanitizedResponse])
-    }
+    setResponses([
+      ...messages,
+      { role: data.generateText.role, content: data.generateText.content },
+    ])
 
-    setInput('')
+    setMainInput('')
   }
 
-  const handleOpenDialog = (response: string, index: number) => {
-    setSelectedResponse({ response, index })
+  const handleOpenDialog = (response: string) => {
+    setSelectedResponse(response)
     props.setOpen(true)
   }
 
   const handleCloseDialog = () => {
-    setSelectedResponse({ response: '', index: 0 })
+    setSelectedResponse('')
     props.setOpen(false)
   }
 
   const handleCopyText = (index: number) => {
-    navigator.clipboard.writeText(responses[index]).then(() => {
+    navigator.clipboard.writeText(responses[index].content).then(() => {
       setIsCopied(true)
       setCopiedIndex(index)
       setTimeout(() => {
@@ -126,10 +104,13 @@ const Conversation = (props: Props) => {
                 <form onSubmit={(e) => handleGenerate(e, index)}>
                   <label>
                     <TextareaAutosize
-                      value={response}
+                      value={response.content}
                       onChange={(e) => {
                         const updatedResponses = [...responses]
-                        updatedResponses[index] = e.target.value
+                        updatedResponses[index] = {
+                          role: 'user',
+                          content: e.target.value,
+                        }
                         setResponses(updatedResponses)
                       }}
                       maxRows={20}
@@ -140,7 +121,7 @@ const Conversation = (props: Props) => {
                   <button type="submit">Generate</button>
                   <button
                     type="button"
-                    onClick={() => handleOpenDialog(response, index)}
+                    onClick={() => handleOpenDialog(response.content)}
                   >
                     Save
                   </button>
@@ -160,8 +141,8 @@ const Conversation = (props: Props) => {
           <form onSubmit={(e) => handleGenerate(e, -1)}>
             <label>
               <TextareaAutosize
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
+                value={mainInput}
+                onChange={(e) => setMainInput(e.target.value)}
                 className="chatbox-input--text"
                 maxRows={10}
                 minRows={1}

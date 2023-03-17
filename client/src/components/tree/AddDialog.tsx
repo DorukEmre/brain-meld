@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Button,
@@ -21,16 +21,21 @@ type Props = {
   onClose: () => void
   onSubmit: (e: Omit<NodeModel, 'id'>) => void
   selectedFolderId?: number
-  selectedResponse?: {
-    response: string
-    index: number
-  }
+  selectedResponse?: string
   droppable: boolean | undefined
 }
 
 export const AddDialog: React.FC<Props> = (props) => {
   const [text, setText] = useState('')
   const [parent, setParent] = useState(props.selectedFolderId || 0)
+
+  useEffect(() => {
+    // Uses beginning of selected reponse as name
+    if (props.selectedResponse) {
+      let resLength = props.selectedResponse.length
+      setText(props.selectedResponse.slice(0, resLength > 40 ? 40 : resLength))
+    }
+  }, [])
 
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
@@ -78,8 +83,7 @@ export const AddDialog: React.FC<Props> = (props) => {
               text,
               parent,
               droppable: props.droppable,
-              data: { body: props.selectedResponse?.response },
-              // data: { fileType: 'text' },
+              data: { body: props?.selectedResponse },
             })
           }
         >

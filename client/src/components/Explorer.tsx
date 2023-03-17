@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { ChatCompletionRequestMessage } from 'openai'
 
 import Sidebar from '@/components/Sidebar'
 import Conversation from '@/components/Conversation'
@@ -29,7 +30,7 @@ const getLastId = (treeData: NodeModel[]) => {
 }
 
 const Main = () => {
-  const [responses, setResponses] = useState<string[]>([])
+  const [responses, setResponses] = useState<ChatCompletionRequestMessage[]>([])
   const [node, setNode] = useState<NodeModel<CustomData>>({
     id: 1,
     parent: 0,
