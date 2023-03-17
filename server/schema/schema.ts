@@ -53,9 +53,7 @@ export const schema = createSchema({
     },
     Mutation: {
       addTreeNode: async (_, { id, parent, droppable, text, data }) => {
-        const treeNode = new TreeNode({ id, parent, droppable, text, data })
-        await treeNode.save()
-        return treeNode
+        return TreeNode.create({ id, parent, droppable, text, data })
       },
       updateTreeNode: async (_, { id, parent, text }) => {
         return TreeNode.findOneAndUpdate(
