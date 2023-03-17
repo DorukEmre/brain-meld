@@ -93,6 +93,13 @@ const Conversation = (props: Props) => {
     })
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Pressing 'Enter' sends query. But still line break if shift key is pressed
+    if (e.key === 'Enter' && !e.shiftKey) {
+      handleGenerate(e, -1)
+    }
+  }
+
   return (
     <>
       <>
@@ -162,6 +169,7 @@ const Conversation = (props: Props) => {
               <TextareaAutosize
                 value={mainInput}
                 onChange={(e) => setMainInput(e.target.value)}
+                onKeyPress={(e) => handleKeyPress(e)}
                 className="chatbox-input--text"
                 maxRows={10}
                 minRows={1}
