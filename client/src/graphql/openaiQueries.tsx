@@ -1,8 +1,11 @@
 import { gql } from '@apollo/client'
 
 const OPENAI_QUERY = gql`
-  query OpenAIQuery($prompt: String!) {
-    generateText(prompt: $prompt)
+  query OpenAIQuery($messages: [MessageInput!]!) {
+    generateText(input: $messages) {
+      role
+      content
+    }
   }
 `
 

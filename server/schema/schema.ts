@@ -16,8 +16,16 @@ export const schema = createSchema({
     type Data {
       body: String
     }
+    input MessageInput {
+      role: String!
+      content: String!
+    }
+    type Message {
+      role: String!
+      content: String!
+    }
     type Query {
-      generateText(prompt: String!): String
+      generateText(input: [MessageInput!]!): Message!
       allTreeNodes: [TreeNode]
     }
     type Mutation {
@@ -40,7 +48,7 @@ export const schema = createSchema({
   resolvers: {
     Query: {
       // args is the second parameter
-      generateText: async (_, { prompt }) => getOpenAI(_, { prompt }),
+      generateText: async (_, { input }) => getOpenAI(_, { input }),
       allTreeNodes: () => TreeNode.find(),
     },
     Mutation: {
