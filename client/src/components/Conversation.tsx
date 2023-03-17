@@ -7,6 +7,12 @@ import { OPENAI_QUERY } from '@/graphql/openaiQueries'
 import { NodeModel, CustomData } from '@/types'
 import { ChatCompletionRequestMessage } from 'openai/dist/api'
 
+import SendIcon from '@mui/icons-material/Send'
+import NoteAddIcon from '@mui/icons-material/NoteAdd'
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
+import DoneIcon from '@mui/icons-material/Done'
+import CircularProgress from '@mui/material/CircularProgress'
+
 interface Props {
   treeData: NodeModel<CustomData>[]
   setTreeData: Dispatch<SetStateAction<NodeModel<CustomData>[]>>
@@ -19,11 +25,13 @@ interface Props {
 
 const Conversation = (props: Props) => {
   const { responses, setResponses } = props
+  const [loading, setLoading] = useState(false)
+  const [loadingIndex, setLoadingIndex] = useState(-100)
   const lastResponseRef = useRef<HTMLDivElement>(null)
   const [mainInput, setMainInput] = useState('')
   const [selectedResponse, setSelectedResponse] = useState('')
   const [isCopied, setIsCopied] = useState(false)
-  const [copiedIndex, setCopiedIndex] = useState(-1)
+  const [copiedIndex, setCopiedIndex] = useState(-100)
 
   useEffect(() => {
     // Scroll to last response when new response added
@@ -31,8 +39,10 @@ const Conversation = (props: Props) => {
     // console.log('responses: ', responses)
   }, [responses.length])
 
-  const handleGenerate = async (e: React.SyntheticEvent, index: number) => {
+  const handleGenerate = async (e: React.FormEvent, index: number) => {
     e.preventDefault()
+    setLoading(true)
+    setLoadingIndex(index)
 
     // If Generate from input at bottom, add it to the end of the responses array
     // If Generate from any other response, truncate up till that response
@@ -52,7 +62,8 @@ const Conversation = (props: Props) => {
     })
 
     // console.log(data.generateText)
-
+    setLoading(false)
+    setLoadingIndex(-100)
     setResponses([
       ...messages,
       { role: data.generateText.role, content: data.generateText.content },
@@ -77,7 +88,7 @@ const Conversation = (props: Props) => {
       setCopiedIndex(index)
       setTimeout(() => {
         setIsCopied(false)
-        setCopiedIndex(-1)
+        setCopiedIndex(-100)
       }, 2000)
     })
   }
@@ -118,17 +129,25 @@ const Conversation = (props: Props) => {
                       cols={50}
                     />
                   </label>
-                  <button type="submit">Generate</button>
+                  <button type="submit">
+                    {loading && loadingIndex === index ? (
+                      <CircularProgress />
+                    ) : (
+                      <SendIcon />
+                    )}
+                  </button>
                   <button
                     type="button"
                     onClick={() => handleOpenDialog(response.content)}
                   >
-                    Save
+                    <NoteAddIcon />
                   </button>
                   <button type="button" onClick={() => handleCopyText(index)}>
-                    {isCopied && index === copiedIndex
-                      ? 'Copied!'
-                      : 'Copy Text'}
+                    {isCopied && copiedIndex === index ? (
+                      <DoneIcon />
+                    ) : (
+                      <ContentCopyRoundedIcon />
+                    )}
                   </button>
                   {index === responses.length - 1 && (
                     <div ref={lastResponseRef} />
@@ -148,7 +167,13 @@ const Conversation = (props: Props) => {
                 minRows={1}
               />
             </label>
-            <button type="submit">Generate</button>
+            <button type="submit">
+              {loading && loadingIndex === -1 ? (
+                <CircularProgress />
+              ) : (
+                <SendIcon />
+              )}
+            </button>
           </form>
         </div>
       </div>
