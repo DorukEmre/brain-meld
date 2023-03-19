@@ -3,9 +3,10 @@
   align-items: center;
   display: grid;
   grid-template-columns: auto auto 1fr auto auto;
-  height: auto;
   padding-inline-end: 8px;
-  width: 250px;
+  width: 100%;
+  min-height: 40px;
+  height: auto;
 }
 
 .expandIconWrapper {
@@ -33,13 +34,11 @@
   cursor: pointer;
 }
 
-.actionButton {
-  padding: 0 4px;
+.actionButtons {
   position: absolute;
   top: 0;
   right: 0;
 }
-/*  */
 
 .inputWrapper {
   align-items: center;

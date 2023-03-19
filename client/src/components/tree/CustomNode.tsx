@@ -126,7 +126,7 @@ export const CustomNode: React.FC<Props> = (props) => {
               </Typography>
             </div>
             {hover && (
-              <div className={styles.actionButton}>
+              <div className={styles.actionButtons}>
                 {/* If a folder, show Add folder option */}
                 {droppable && (
                   <>

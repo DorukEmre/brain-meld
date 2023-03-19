@@ -10,8 +10,8 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <HTMLMetaTags />
-      <Header />
-      <main className="container">{children}</main>
+      {/* <Header /> */}
+      <main className="wrapper">{children}</main>
     </>
   )
 }

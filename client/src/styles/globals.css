@@ -39,21 +39,20 @@ header {
 }
 main {
   background-color: hsl(0, 26%, 4%);
-  height: calc(100% - 24px);
+  min-height: 100%;
+  height: auto;
   color: antiquewhite;
 }
-.container {
-  display: flex;
-  flex-direction: row;
+.wrapper {
+  display: grid;
+  grid-template-columns: 260px 1fr;
 }
+
 .tree-nav {
-  position: sticky;
-  top: 0px;
-  flex-shrink: 0;
-  width: 260px;
   height: 100%;
   color: antiquewhite;
   background-color: hsl(310, 100%, 13%);
+  overflow-y: auto;
 }
 
 .chatbox-container {
@@ -61,8 +60,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
 }
 .chatbox-conversation {
   height: 100%;
