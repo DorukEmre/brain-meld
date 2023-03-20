@@ -121,13 +121,15 @@ function Sidebar(props: Props) {
                   </button>
                 )}
               </div>
-              <div>
-                <Button
+              <>
+                <button
+                  className={styles.addFolderButton}
                   onClick={() => handleOpenDialog(0)}
-                  startIcon={<CreateNewFolderIcon />}
+                  // startIcon={<CreateNewFolderIcon />}
                 >
+                  <CreateNewFolderIcon />
                   Add Folder
-                </Button>
+                </button>
                 {props.open && (
                   <AddDialog
                     tree={props.treeData}
@@ -138,7 +140,7 @@ function Sidebar(props: Props) {
                     selectedFolderId={selectedFolderId}
                   />
                 )}
-              </div>
+              </>
               <Tree
                 tree={props.treeData}
                 rootId={0}

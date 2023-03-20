@@ -21,7 +21,22 @@
   border: 1px solid var(--clr-light-200);
   cursor: pointer;
 }
-.handleChatBarButton:hover {
+
+.addFolderButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--clr-light-300);
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  margin: 0 4px 0 auto;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.handleChatBarButton:hover,
+.addFolderButton:hover {
   background-color: var(--clr-dark-500);
 }
 
