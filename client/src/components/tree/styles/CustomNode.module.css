@@ -38,6 +38,12 @@
   position: absolute;
   top: 0;
   right: 0;
+  background-color: var(--clr-dark-500);
+  border-radius: 6px;
+}
+.actionButton:hover {
+  background-color: var(--clr-dark-600);
+  border-radius: 2px;
 }
 
 .inputWrapper {

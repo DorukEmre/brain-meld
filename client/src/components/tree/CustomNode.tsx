@@ -134,22 +134,28 @@ export const CustomNode: React.FC<Props> = (props) => {
                       size="small"
                       onClick={() => props.handleSelectNode(id)}
                     >
-                      <PreviewIcon fontSize="small" />
+                      <PreviewIcon
+                        fontSize="small"
+                        className={styles.actionButton}
+                      />
                     </IconButton>
                     <IconButton
                       size="small"
                       onClick={() => props.onAddFolder(id)}
                     >
-                      <CreateNewFolderIcon fontSize="small" />
+                      <CreateNewFolderIcon
+                        fontSize="small"
+                        className={styles.actionButton}
+                      />
                     </IconButton>
                   </>
                 )}
                 {/* Show Delete and Edit options */}
                 <IconButton size="small" onClick={handleShowInput}>
-                  <EditIcon fontSize="small" />
+                  <EditIcon fontSize="small" className={styles.actionButton} />
                 </IconButton>
                 <IconButton size="small" onClick={() => props.onDelete(id)}>
-                  <Delete fontSize="small" />
+                  <Delete fontSize="small" className={styles.actionButton} />
                 </IconButton>
               </div>
             )}
