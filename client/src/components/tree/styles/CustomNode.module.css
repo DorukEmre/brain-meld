@@ -47,25 +47,18 @@
 }
 
 .inputWrapper {
-  align-items: center;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: flex-start;
-  z-index: 100;
-  background-color: slateblue;
+  background-color: var(--clr-dark-500);
   border-radius: 6px;
 }
-
-.textField input {
+.textField {
+  width: 100%;
+}
+.textField textarea {
+  padding: 2px 6px;
   font-size: 14px;
-  padding: 8px;
-  color: antiquewhite;
+  color: var(--clr-light-300);
 }
-
-.nodeInput {
-  width: 200px;
-}
-
-.nodeLabel {
-  padding-right: 15px;
+.renameButtons {
+  width: fit-content;
+  margin-left: auto;
 }

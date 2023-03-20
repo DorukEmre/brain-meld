@@ -94,21 +94,36 @@ export const CustomNode: React.FC<Props> = (props) => {
         {visibleInput ? (
           <div className={styles.inputWrapper}>
             <TextField
-              className={`${styles.textField}
-              ${styles.nodeInput}`}
+              className={styles.textField}
               value={labelText}
               onChange={handleChangeText}
+              multiline={true}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor: 'var(--clr-compl-300)',
+                  padding: '0',
+                  borderRadius: '6px 6px 0 0',
+                  width: '100%',
+                },
+              }}
             />
-            <IconButton
-              className={styles.editButton}
-              onClick={handleSubmit}
-              disabled={labelText === ''}
-            >
-              <CheckIcon className={styles.editIcon} />
-            </IconButton>
-            <IconButton className={styles.editButton} onClick={handleCancel}>
-              <CloseIcon className={styles.editIcon} />
-            </IconButton>
+            <div className={styles.renameButtons}>
+              <IconButton
+                className={styles.editButton}
+                onClick={handleSubmit}
+                disabled={labelText === ''}
+                size="small"
+              >
+                <CheckIcon className={styles.editIcon} fontSize="small" />
+              </IconButton>
+              <IconButton
+                className={styles.editButton}
+                onClick={handleCancel}
+                size="small"
+              >
+                <CloseIcon className={styles.editIcon} fontSize="small" />
+              </IconButton>
+            </div>
           </div>
         ) : (
           <>
