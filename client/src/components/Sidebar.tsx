@@ -1,24 +1,25 @@
 import React, { useState, Dispatch, SetStateAction } from 'react'
 import { DndProvider } from 'react-dnd'
 import { ThemeProvider, CssBaseline } from '@mui/material'
-import Button from '@mui/material/Button'
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder'
 import RestoreIcon from '@mui/icons-material/Restore'
 import AddIcon from '@mui/icons-material/Add'
+
 import {
   Tree,
   MultiBackend,
-  DragLayerMonitorProps,
-  getDescendants,
   getBackendOptions,
   DropOptions,
 } from '@minoru/react-dnd-treeview'
+
 import { NodeModel, CustomData } from '@/types'
 import { CustomNode } from './tree/CustomNode'
 import { CustomDragPreview } from './tree/CustomDragPreview'
 import { AddDialog } from './tree/AddDialog'
 import { theme } from './tree/theme'
+
 import styles from '@/styles/Sidebar.module.css'
+
 import { useMutation } from '@apollo/client'
 import { DELETE_TREENODE, UPDATE_TREENODE } from '@/graphql/treeMutations'
 import { GET_TREENODES } from '@/graphql/treeQueries'

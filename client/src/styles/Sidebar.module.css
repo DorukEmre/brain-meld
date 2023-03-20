@@ -37,7 +37,7 @@
 
 .handleChatBarButton:hover,
 .addFolderButton:hover {
-  background-color: var(--clr-dark-500);
+  background-color: var(--clr-dark-400);
 }
 
 .treeRoot {

@@ -1,0 +1,102 @@
+.chatboxContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  overflow-y: hidden;
+}
+.chatboxConversation {
+  height: 100%;
+  margin-bottom: 71px;
+  overflow-y: auto;
+}
+.chatboxResponse {
+  padding: 0.5rem;
+  background-color: var(--clr-primary-200);
+}
+.chatboxResponse textarea {
+  width: 100%;
+  resize: none;
+  color: var(--clr-light-300);
+  background-color: var(--clr-primary-300);
+  padding: 10px 16px;
+  border: 1px solid var(--clr-light-300);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.chatboxResponse textarea:focus {
+  outline: 2px solid var(--clr-light-300);
+  cursor: text;
+}
+.chatboxResponseButtons {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+  width: fit-content;
+}
+.chatboxResponseButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  background-color: var(--clr-primary-400);
+  color: var(--clr-light-400);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 32px;
+  height: 38px;
+}
+
+.chatboxResponseButton:hover {
+  background-color: var(--clr-compl-300);
+}
+
+.chatboxInputWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--clr-primary-200);
+  padding: 0.5rem;
+}
+
+.chatboxInputContainer {
+  position: relative;
+  padding: 10px 0 10px 16px;
+  background-color: var(--clr-compl-400);
+  border-radius: 5px;
+  border: 1px solid var(--clr-light-300);
+}
+
+.chatboxInputText {
+  width: 100%;
+  resize: none;
+  color: var(--clr-light-400);
+  background-color: var(--clr-compl-400);
+  border: none;
+  outline: none;
+  padding-right: 44px;
+}
+.chatboxInputSendButton {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  height: 28px;
+  width: 28px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--clr-primary-200);
+  color: var(--clr-light-400);
+  cursor: pointer;
+}
+
+.chatboxInputSendButton:hover {
+  background-color: var(--clr-dark-500);
+}

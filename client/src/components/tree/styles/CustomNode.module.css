@@ -36,18 +36,18 @@
 
 .actionButtons {
   position: absolute;
-  top: 0;
-  right: 0;
-  background-color: var(--clr-dark-500);
+  top: 2px;
+  right: 2px;
+  background-color: var(--clr-dark-400);
   border-radius: 6px;
 }
 .actionButton:hover {
-  background-color: var(--clr-dark-600);
+  background-color: var(--clr-dark-500);
   border-radius: 2px;
 }
 
 .inputWrapper {
-  background-color: var(--clr-dark-500);
+  background-color: var(--clr-dark-400);
   border-radius: 6px;
 }
 .textField {
@@ -61,4 +61,8 @@
 .renameButtons {
   width: fit-content;
   margin-left: auto;
+}
+.editIcon:hover {
+  background-color: var(--clr-dark-500);
+  border-radius: 2px;
 }

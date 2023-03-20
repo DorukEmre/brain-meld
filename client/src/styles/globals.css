@@ -3,13 +3,18 @@
 :root {
   --clr-dark-300: #161616;
   --clr-dark-400: #202020;
-  --clr-dark-500: #202020;
-  --clr-dark-600: #494949;
+  --clr-dark-500: #494949;
 
   --clr-light-200: #8f8f8f;
   --clr-light-300: #cfcfcf;
+  --clr-light-400: #e8e8e8;
 
   --clr-compl-300: #05307a;
+  --clr-compl-400: #052c38;
+
+  --clr-primary-200: #14151c;
+  --clr-primary-300: #1d1e26;
+  --clr-primary-400: #31344a;
 
   --clr-accent-200: #25a8ff;
   --clr-accent-280: #0077c7;
@@ -59,7 +64,7 @@ main {
   min-height: 100%;
   height: auto;
   color: var(--clr-light-300);
-  background-color: var(--clr-dark-400);
+  background-color: var(--clr-primary-200);
 }
 .wrapper {
   display: grid;
@@ -71,54 +76,4 @@ main {
   color: var(--clr-light-300);
   background-color: var(--clr-dark-300);
   overflow-y: auto;
-}
-
-.chatbox-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  overflow-y: hidden;
-}
-.chatbox-conversation {
-  height: 100%;
-  margin-bottom: 100px;
-  overflow-y: auto;
-}
-.chatbox-response {
-  padding: 0.5rem;
-  background-color: var(--clr-dark-400);
-  /* border-top: 2px solid red; */
-}
-.chatbox-response textarea {
-  width: 100%;
-  resize: none;
-  color: #e2d592;
-  background-color: hsl(0, 26%, 12%);
-  padding: 10px 16px;
-  border: 1px solid #e2d592;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.chatbox-response textarea:focus {
-  outline: 2px solid #e2d592;
-  cursor: text;
-}
-.chatbox-input-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: hsl(194, 89%, 8%);
-  padding: 0.5rem;
-}
-
-.chatbox-input--text {
-  width: 100%;
-  resize: none;
-  padding: 10px 16px;
-  color: hsl(194, 90%, 95%);
-  background-color: hsl(194, 83%, 12%);
-  border-radius: 5px;
 }
