@@ -3,6 +3,8 @@ import { DndProvider } from 'react-dnd'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import Button from '@mui/material/Button'
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder'
+import RestoreIcon from '@mui/icons-material/Restore'
+import AddIcon from '@mui/icons-material/Add'
 import {
   Tree,
   MultiBackend,
@@ -101,20 +103,22 @@ function Sidebar(props: Props) {
         <DndProvider backend={MultiBackend} options={getBackendOptions()}>
           <nav className="tree-nav">
             <div className={styles.app}>
-              <div>
-                <Button
-                  fullWidth={
-                    props.nodeSelected && props.isResponses ? false : true
-                  }
-                  variant="outlined"
+              <div className={styles.handleChatBar}>
+                <button
                   onClick={props.handleNewChat}
+                  className={styles.handleChatBarButton}
                 >
-                  New Chat
-                </Button>
+                  <AddIcon />
+                  <span>New chat</span>
+                </button>
                 {props.nodeSelected && props.isResponses && (
-                  <Button variant="outlined" onClick={props.handlePreviousChat}>
-                    Previous Chat
-                  </Button>
+                  <button
+                    onClick={props.handlePreviousChat}
+                    className={styles.handleChatBarButton}
+                  >
+                    <RestoreIcon />
+                    <span>Previous chat</span>
+                  </button>
                 )}
               </div>
               <div>

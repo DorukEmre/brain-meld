@@ -1,3 +1,20 @@
+/* Colours */
+
+:root {
+  --clr-dark-300: #161616;
+  --clr-dark-400: #202020;
+  --clr-dark-500: #202020;
+
+  --clr-light-200: #8f8f8f;
+  --clr-light-300: #cfcfcf;
+
+  --clr-compl-300: #05307a;
+
+  --clr-accent-200: #25a8ff;
+  --clr-accent-280: #0077c7;
+  --clr-accent-300: #005a99;
+}
+
 /* Sticky header and footer pushed down */
 #__next {
   height: 100%;
@@ -38,10 +55,10 @@ header {
   background-color: rgb(2, 44, 159);
 }
 main {
-  background-color: hsl(0, 26%, 4%);
   min-height: 100%;
   height: auto;
-  color: antiquewhite;
+  color: var(--clr-light-300);
+  background-color: var(--clr-dark-400);
 }
 .wrapper {
   display: grid;
@@ -50,8 +67,8 @@ main {
 
 .tree-nav {
   height: 100%;
-  color: antiquewhite;
-  background-color: hsl(310, 100%, 13%);
+  color: var(--clr-light-300);
+  background-color: var(--clr-dark-300);
   overflow-y: auto;
 }
 
@@ -70,8 +87,8 @@ main {
 }
 .chatbox-response {
   padding: 0.5rem;
-  background-color: hsl(0, 26%, 4%);
-  border-top: 2px solid #110a0a;
+  background-color: var(--clr-dark-400);
+  /* border-top: 2px solid red; */
 }
 .chatbox-response textarea {
   width: 100%;
