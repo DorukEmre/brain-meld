@@ -17,9 +17,12 @@ const getOpenAI = async (
       model: 'gpt-3.5-turbo',
       messages: input,
     })
-
     // console.log(completion.data.choices[0].message)
-    return completion.data.choices[0].message
+
+    // Remove any whitespace and leading line breaks
+    const reply = completion.data.choices[0].message
+    reply.content = reply.content.replace(/^\s*[\r\n]{2}/, '')
+    return reply
   } catch (error) {
     console.error(error)
     return error.response.data.error.message
