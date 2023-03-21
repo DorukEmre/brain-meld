@@ -52,6 +52,6 @@
   background-color: var(--clr-compl-300);
 }
 
-.treeRoot > .li {
+.treeRoot > .li:not(:last-child) {
   border-bottom: 1px solid var(--clr-light-300);
 }
