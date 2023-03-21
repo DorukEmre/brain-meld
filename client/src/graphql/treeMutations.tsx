@@ -27,12 +27,25 @@ const ADD_TREENODE = gql`
 `
 
 const UPDATE_TREENODE = gql`
-  mutation UpdateTreeNode($id: Int!, $parent: Int!, $text: String!) {
-    updateTreeNode(id: $id, parent: $parent, text: $text) {
+  mutation UpdateTreeNode(
+    $id: Int!
+    $parent: Int!
+    $text: String!
+    $body: String
+  ) {
+    updateTreeNode(
+      id: $id
+      parent: $parent
+      text: $text
+      data: { body: $body }
+    ) {
       id
       parent
       droppable
       text
+      data {
+        body
+      }
     }
   }
 `

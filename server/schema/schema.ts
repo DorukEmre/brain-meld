@@ -6,15 +6,15 @@ import TreeNode from '../models/TreeNode.model.js'
 
 export const schema = createSchema({
   typeDefs: /* GraphQL */ `
+    type Data {
+      body: String
+    }
     type TreeNode {
       id: Int!
       parent: Int!
       droppable: Boolean!
       text: String!
       data: Data
-    }
-    type Data {
-      body: String
     }
     input MessageInput {
       role: String!
@@ -28,6 +28,9 @@ export const schema = createSchema({
       generateText(input: [MessageInput!]!): Message!
       allTreeNodes: [TreeNode]
     }
+    input DataInput {
+      body: String
+    }
     type Mutation {
       addTreeNode(
         id: Int!
@@ -37,12 +40,14 @@ export const schema = createSchema({
         data: DataInput
       ): TreeNode
 
-      updateTreeNode(id: Int!, parent: Int!, text: String!): TreeNode
+      updateTreeNode(
+        id: Int!
+        parent: Int!
+        text: String!
+        data: DataInput
+      ): TreeNode
 
       deleteTreeNode(id: Int!): TreeNode
-    }
-    input DataInput {
-      body: String
     }
   `,
   resolvers: {
@@ -55,13 +60,14 @@ export const schema = createSchema({
       addTreeNode: async (_, { id, parent, droppable, text, data }) => {
         return TreeNode.create({ id, parent, droppable, text, data })
       },
-      updateTreeNode: async (_, { id, parent, text }) => {
+      updateTreeNode: async (_, { id, parent, text, data: { body } }) => {
         return TreeNode.findOneAndUpdate(
           { id },
           {
             $set: {
               parent,
               text,
+              data: { body },
             },
           },
           { new: true },
