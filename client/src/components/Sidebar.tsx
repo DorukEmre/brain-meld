@@ -65,7 +65,7 @@ function Sidebar(props: Props) {
     }
   }
 
-  const handleTextChange = (id: NodeModel['id'], value: string) => {
+  const handleTitleChange = (id: NodeModel['id'], value: string) => {
     const node = props.treeData.find((node) => node.id === id)
 
     if (node) {
@@ -151,7 +151,7 @@ function Sidebar(props: Props) {
                     {...options}
                     onDelete={handleDelete}
                     onAddFolder={() => handleOpenDialog(Number(node.id))}
-                    onTextChange={handleTextChange}
+                    onTitleChange={handleTitleChange}
                     handleSelectNode={() => props.handleSelectNode(node.id)}
                   />
                 )}

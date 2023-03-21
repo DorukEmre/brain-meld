@@ -6,8 +6,9 @@ import IconButton from '@mui/material/IconButton'
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
+import ArrowRight from '@mui/icons-material/ArrowRight'
 import EditIcon from '@mui/icons-material/Edit'
-import { ArrowRight, Delete } from '@mui/icons-material'
+import Delete from '@mui/icons-material/Delete'
 import PreviewIcon from '@mui/icons-material/Preview'
 
 import { useDragOver } from '@minoru/react-dnd-treeview'
@@ -21,18 +22,17 @@ type Props = {
   isOpen: boolean
   onToggle: (id: NodeModel['id']) => void
   onDelete: (id: NodeModel['id']) => void
-  onTextChange: (id: NodeModel['id'], value: string) => void
+  onTitleChange: (id: NodeModel['id'], value: string) => void
   onAddFolder: (id: NodeModel['id']) => void
   handleSelectNode: (id: NodeModel['id']) => void
 }
 
 export const CustomNode: React.FC<Props> = (props) => {
-  // const { id, droppable, text, data } = props.node
   const { id, droppable, text } = props.node
 
   const [hover, setHover] = useState(false)
   const [visibleInput, setVisibleInput] = useState(false)
-  const [labelText, setLabelText] = useState(text)
+  const [titleText, setTitleText] = useState(text)
 
   const indent = props.depth * 24
 
@@ -46,18 +46,18 @@ export const CustomNode: React.FC<Props> = (props) => {
   }
 
   const handleCancel = () => {
-    setLabelText(text)
+    setTitleText(text)
     setVisibleInput(false)
     setHover(false)
   }
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLabelText(e.target.value)
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitleText(e.target.value)
   }
 
   const handleSubmit = () => {
     setVisibleInput(false)
-    props.onTextChange(id, labelText)
+    props.onTitleChange(id, titleText)
     setHover(false)
   }
 
@@ -84,10 +84,7 @@ export const CustomNode: React.FC<Props> = (props) => {
       </div>
       <div className={styles.typeIconWrapper}>
         {/* Folder-File icon */}
-        <TypeIcon
-          droppable={droppable ? droppable : false}
-          // fileType={data?.fileType}
-        />
+        <TypeIcon droppable={droppable ? droppable : false} />
       </div>
 
       <>
@@ -95,8 +92,8 @@ export const CustomNode: React.FC<Props> = (props) => {
           <div className={styles.inputWrapper}>
             <TextField
               className={styles.textField}
-              value={labelText}
-              onChange={handleChangeText}
+              value={titleText}
+              onChange={handleChangeTitle}
               multiline={true}
               sx={{
                 '& .MuiInputBase-root': {
@@ -111,7 +108,7 @@ export const CustomNode: React.FC<Props> = (props) => {
               <IconButton
                 className={styles.editButton}
                 onClick={handleSubmit}
-                disabled={labelText === ''}
+                disabled={titleText === ''}
                 size="small"
               >
                 <CheckIcon className={styles.editIcon} fontSize="small" />
