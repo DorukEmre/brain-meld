@@ -20,10 +20,6 @@ import { theme } from './tree/theme'
 
 import styles from '@/styles/Sidebar.module.css'
 
-import { useMutation } from '@apollo/client'
-import { DELETE_TREENODE, UPDATE_TREENODE } from '@/graphql/treeMutations'
-import { GET_TREENODES } from '@/graphql/treeQueries'
-
 interface Props {
   treeData: NodeModel<CustomData>[]
   setTreeData: Dispatch<SetStateAction<NodeModel<CustomData>[]>>
@@ -35,57 +31,16 @@ interface Props {
   isResponses: boolean
   handleNewChat: () => void
   handlePreviousChat: () => void
+  handleDropNode: (
+    newTree: NodeModel<CustomData>[],
+    options: DropOptions<CustomData>,
+  ) => void
+  handlePromptTitleChange: (id: NodeModel['id'], value: string) => void
+  handleDeletePrompt: (id: NodeModel['id']) => void
 }
 
 function Sidebar(props: Props) {
   const [selectedFolderId, setSelectedFolderId] = useState(0)
-
-  const [updateTreeNode] = useMutation(UPDATE_TREENODE, {
-    refetchQueries: [{ query: GET_TREENODES }],
-  })
-
-  const [deleteTreeNode] = useMutation(DELETE_TREENODE, {
-    refetchQueries: [{ query: GET_TREENODES }],
-  })
-
-  const handleDrop = (
-    newTree: NodeModel<CustomData>[],
-    options: DropOptions<CustomData>,
-  ) => {
-    const node = props.treeData.find((node) => node.id === options.dragSourceId)
-
-    if (node) {
-      updateTreeNode({
-        variables: {
-          id: node.id,
-          parent: options.dropTargetId,
-          text: node.text,
-        },
-      })
-    }
-  }
-
-  const handleTitleChange = (id: NodeModel['id'], value: string) => {
-    const node = props.treeData.find((node) => node.id === id)
-
-    if (node) {
-      updateTreeNode({
-        variables: {
-          id,
-          parent: node.parent,
-          text: value,
-        },
-      })
-    }
-  }
-
-  const handleDelete = (id: NodeModel['id']) => {
-    deleteTreeNode({
-      variables: {
-        id,
-      },
-    })
-  }
 
   const handleOpenDialog = (nodeId: number) => {
     setSelectedFolderId(nodeId)
@@ -126,7 +81,6 @@ function Sidebar(props: Props) {
                 <button
                   className={styles.addFolderButton}
                   onClick={() => handleOpenDialog(0)}
-                  // startIcon={<CreateNewFolderIcon />}
                 >
                   <CreateNewFolderIcon />
                   Add Folder
@@ -149,16 +103,16 @@ function Sidebar(props: Props) {
                   <CustomNode
                     node={node}
                     {...options}
-                    onDelete={handleDelete}
+                    onDelete={props.handleDeletePrompt}
                     onAddFolder={() => handleOpenDialog(Number(node.id))}
-                    onTitleChange={handleTitleChange}
+                    onTitleChange={props.handlePromptTitleChange}
                     handleSelectNode={() => props.handleSelectNode(node.id)}
                   />
                 )}
                 dragPreviewRender={(monitorProps) => (
                   <CustomDragPreview monitorProps={monitorProps} />
                 )}
-                onDrop={handleDrop}
+                onDrop={props.handleDropNode}
                 classes={{
                   root: styles.treeRoot,
                   draggingSource: styles.draggingSource,
