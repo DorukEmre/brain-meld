@@ -1,0 +1,57 @@
+.container {
+  padding: 2rem 1rem;
+}
+
+.titleWrapper {
+  position: relative;
+}
+.bodyWrapper {
+  position: relative;
+}
+
+.promptTitle {
+  margin-bottom: 2rem;
+}
+.promptBody {
+  white-space: pre-wrap;
+  font-family: inherit;
+}
+
+.actionButtons {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background-color: var(--clr-dark-400);
+  border-radius: 6px;
+}
+.actionButton {
+  color: var(--clr-light-300);
+}
+.actionButton:hover {
+  background-color: var(--clr-dark-500);
+  border-radius: 2px;
+}
+
+.inputWrapper {
+  background-color: var(--clr-dark-400);
+  border-radius: 6px;
+}
+.textField {
+  width: 100%;
+}
+.textField textarea {
+  padding: 2px 6px;
+  /* font-size: 14px; */
+  color: var(--clr-light-300);
+}
+.renameButtons {
+  width: fit-content;
+  margin-left: auto;
+}
+.editIcon {
+  color: var(--clr-light-300);
+}
+.editIcon:hover {
+  background-color: var(--clr-dark-500);
+  border-radius: 2px;
+}
