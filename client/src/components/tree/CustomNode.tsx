@@ -31,7 +31,7 @@ export const CustomNode: React.FC<Props> = (props) => {
   const { id, droppable, text } = props.node
 
   const [hover, setHover] = useState(false)
-  const [visibleInput, setVisibleInput] = useState(false)
+  const [editTitle, setEditTitle] = useState(false)
   const [titleText, setTitleText] = useState(text)
 
   const indent = props.depth * 24
@@ -42,13 +42,7 @@ export const CustomNode: React.FC<Props> = (props) => {
   }
 
   const handleShowInput = () => {
-    setVisibleInput(true)
-  }
-
-  const handleCancel = () => {
-    setTitleText(text)
-    setVisibleInput(false)
-    setHover(false)
+    setEditTitle(true)
   }
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +50,14 @@ export const CustomNode: React.FC<Props> = (props) => {
   }
 
   const handleSubmit = () => {
-    setVisibleInput(false)
+    setEditTitle(false)
     props.onTitleChange(id, titleText)
+    setHover(false)
+  }
+
+  const handleCancel = () => {
+    setTitleText(text)
+    setEditTitle(false)
     setHover(false)
   }
 
@@ -88,7 +88,7 @@ export const CustomNode: React.FC<Props> = (props) => {
       </div>
 
       <>
-        {visibleInput ? (
+        {editTitle ? (
           <div className={styles.inputWrapper}>
             <TextField
               className={styles.textField}
