@@ -9,13 +9,14 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: ['/node_modules/'],
-  testMatch: ['**/__tests__/**/*.?(t|j)s?(x)'],
-
+  setupFilesAfterEnv: ['./jest.setup.js'],
+  testMatch: ['**/__tests__/**/*.{test,spec}.?(t|j)s?(x)'],
+  // Display individual test results
+  verbose: true,
   // To set src/ as @/
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-
   // DON'T SET THIS HERE - it's overridden below
   transformIgnorePatterns: [],
 }
