@@ -110,15 +110,25 @@ export const CustomNode: React.FC<Props> = (props) => {
                 onClick={handleSubmit}
                 disabled={titleText === ''}
                 size="small"
+                aria-label="Save edit"
               >
-                <CheckIcon className={styles.editIcon} fontSize="small" />
+                <CheckIcon
+                  className={styles.editIcon}
+                  fontSize="small"
+                  aria-hidden="true"
+                />
               </IconButton>
               <IconButton
                 className={styles.editButton}
                 onClick={handleCancel}
                 size="small"
+                aria-label="Cancel edit"
               >
-                <CloseIcon className={styles.editIcon} fontSize="small" />
+                <CloseIcon
+                  className={styles.editIcon}
+                  fontSize="small"
+                  aria-hidden="true"
+                />
               </IconButton>
             </div>
           </div>
@@ -145,29 +155,49 @@ export const CustomNode: React.FC<Props> = (props) => {
                     <IconButton
                       size="small"
                       onClick={() => props.handleSelectNode(id)}
+                      aria-label="View folder content"
                     >
                       <PreviewIcon
                         fontSize="small"
                         className={styles.actionButton}
+                        aria-hidden="true"
                       />
                     </IconButton>
                     <IconButton
                       size="small"
                       onClick={() => props.onAddFolder(id)}
+                      aria-label="Add folder"
                     >
                       <CreateNewFolderIcon
                         fontSize="small"
                         className={styles.actionButton}
+                        aria-hidden="true"
                       />
                     </IconButton>
                   </>
                 )}
                 {/* Show Delete and Edit options */}
-                <IconButton size="small" onClick={handleShowInput}>
-                  <EditIcon fontSize="small" className={styles.actionButton} />
+                <IconButton
+                  size="small"
+                  onClick={handleShowInput}
+                  aria-label="Edit name"
+                >
+                  <EditIcon
+                    fontSize="small"
+                    className={styles.actionButton}
+                    aria-hidden="true"
+                  />
                 </IconButton>
-                <IconButton size="small" onClick={() => props.onDelete(id)}>
-                  <Delete fontSize="small" className={styles.actionButton} />
+                <IconButton
+                  size="small"
+                  onClick={() => props.onDelete(id)}
+                  aria-label="Delete"
+                >
+                  <Delete
+                    fontSize="small"
+                    className={styles.actionButton}
+                    aria-hidden="true"
+                  />
                 </IconButton>
               </div>
             )}

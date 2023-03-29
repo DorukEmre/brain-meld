@@ -149,10 +149,10 @@ const Conversation = (props: Props) => {
                       className={styles.chatboxResponseButton}
                     >
                       {loading && loadingIndex === index ? (
-                        <CircularProgress size={18} />
+                        <CircularProgress size={18} aria-hidden="true" />
                       ) : (
                         <>
-                          <SendIcon sx={{ fontSize: 20 }} />
+                          <SendIcon sx={{ fontSize: 20 }} aria-hidden="true" />
                           <p>Send</p>
                         </>
                       )}
@@ -163,7 +163,7 @@ const Conversation = (props: Props) => {
                       className={styles.chatboxResponseButton}
                     >
                       <>
-                        <NoteAddIcon sx={{ fontSize: 20 }} />
+                        <NoteAddIcon sx={{ fontSize: 20 }} aria-hidden="true" />
                         <p>Save</p>
                       </>
                     </button>
@@ -173,10 +173,13 @@ const Conversation = (props: Props) => {
                       className={styles.chatboxResponseButton}
                     >
                       {isCopied && copiedIndex === index ? (
-                        <DoneIcon />
+                        <DoneIcon aria-hidden="true" />
                       ) : (
                         <>
-                          <ContentCopyRoundedIcon sx={{ fontSize: 20 }} />
+                          <ContentCopyRoundedIcon
+                            sx={{ fontSize: 20 }}
+                            aria-hidden="true"
+                          />
                           <p>Copy</p>
                         </>
                       )}
@@ -224,11 +227,15 @@ const Conversation = (props: Props) => {
                 maxRows={10}
                 minRows={1}
               />
-              <button type="submit" className={styles.chatboxInputSendButton}>
+              <button
+                type="submit"
+                className={styles.chatboxInputSendButton}
+                aria-label="Submit"
+              >
                 {loading && loadingIndex === -1 ? (
-                  <CircularProgress size={18} />
+                  <CircularProgress size={18} aria-hidden="true" />
                 ) : (
-                  <SendIcon sx={{ fontSize: 18 }} />
+                  <SendIcon sx={{ fontSize: 18 }} aria-hidden="true" />
                 )}
               </button>
             </div>

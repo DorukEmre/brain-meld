@@ -64,7 +64,7 @@ function Sidebar(props: Props) {
                   onClick={props.handleNewChat}
                   className={styles.handleChatBarButton}
                 >
-                  <AddIcon />
+                  <AddIcon aria-hidden="true" />
                   <span>New chat</span>
                 </button>
                 {props.nodeSelected && props.isResponses && (
@@ -72,7 +72,7 @@ function Sidebar(props: Props) {
                     onClick={props.handlePreviousChat}
                     className={styles.handleChatBarButton}
                   >
-                    <RestoreIcon />
+                    <RestoreIcon aria-hidden="true" />
                     <span>Previous chat</span>
                   </button>
                 )}
@@ -82,7 +82,7 @@ function Sidebar(props: Props) {
                   className={styles.addFolderButton}
                   onClick={() => handleOpenDialog(0)}
                 >
-                  <CreateNewFolderIcon />
+                  <CreateNewFolderIcon aria-hidden="true" />
                   Add Folder
                 </button>
                 {props.open && (

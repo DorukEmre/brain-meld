@@ -68,14 +68,27 @@ const SelectedPrompt = (props: Props) => {
           <>
             <h1 className={styles.promptTitle}>{promptTitle}</h1>
             <div className={styles.actionButtons}>
-              <IconButton size="small" onClick={handleEditTitle}>
-                <EditIcon fontSize="small" className={styles.actionButton} />
+              <IconButton
+                size="small"
+                onClick={handleEditTitle}
+                aria-label="Edit title"
+              >
+                <EditIcon
+                  fontSize="small"
+                  className={styles.actionButton}
+                  aria-hidden="true"
+                />
               </IconButton>
               <IconButton
                 size="small"
                 onClick={() => props.handleDeletePrompt(node.id)}
+                aria-label="Delete prompt"
               >
-                <Delete fontSize="small" className={styles.actionButton} />
+                <Delete
+                  fontSize="small"
+                  className={styles.actionButton}
+                  aria-hidden="true"
+                />
               </IconButton>
             </div>
           </>
@@ -101,15 +114,25 @@ const SelectedPrompt = (props: Props) => {
                 onClick={handleSubmitTitleChange}
                 disabled={promptTitle === ''}
                 size="small"
+                aria-label="Save edit"
               >
-                <CheckIcon className={styles.editIcon} fontSize="small" />
+                <CheckIcon
+                  className={styles.editIcon}
+                  fontSize="small"
+                  aria-hidden="true"
+                />
               </IconButton>
               <IconButton
                 className={styles.editButton}
                 onClick={handleCancelTitleChange}
                 size="small"
+                aria-label="Cancel edit"
               >
-                <CloseIcon className={styles.editIcon} fontSize="small" />
+                <CloseIcon
+                  className={styles.editIcon}
+                  fontSize="small"
+                  aria-hidden="true"
+                />
               </IconButton>
             </div>
           </div>
@@ -120,8 +143,16 @@ const SelectedPrompt = (props: Props) => {
           <>
             <pre className={styles.promptBody}>{promptBody}</pre>
             <div className={styles.actionButtons}>
-              <IconButton size="small" onClick={handleEditBody}>
-                <EditIcon fontSize="small" className={styles.actionButton} />
+              <IconButton
+                size="small"
+                onClick={handleEditBody}
+                aria-label="Edit body"
+              >
+                <EditIcon
+                  fontSize="small"
+                  className={styles.actionButton}
+                  aria-hidden="true"
+                />
               </IconButton>
             </div>
           </>
@@ -147,15 +178,25 @@ const SelectedPrompt = (props: Props) => {
                 onClick={handleSubmitBodyChange}
                 disabled={promptBody === ''}
                 size="small"
+                aria-label="Save edit"
               >
-                <CheckIcon className={styles.editIcon} fontSize="small" />
+                <CheckIcon
+                  className={styles.editIcon}
+                  fontSize="small"
+                  aria-hidden="true"
+                />
               </IconButton>
               <IconButton
                 className={styles.editButton}
                 onClick={handleCancelBodyChange}
                 size="small"
+                aria-label="Cancel edit"
               >
-                <CloseIcon className={styles.editIcon} fontSize="small" />
+                <CloseIcon
+                  className={styles.editIcon}
+                  fontSize="small"
+                  aria-hidden="true"
+                />
               </IconButton>
             </div>
           </div>
