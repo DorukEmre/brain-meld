@@ -11,10 +11,12 @@
 
 .promptTitle {
   margin-bottom: 2rem;
+  color: var(--clr-accent-400);
 }
 .promptBody {
   white-space: pre-wrap;
   font-family: inherit;
+  color: var(--clr-light-400);
 }
 
 .actionButtons {

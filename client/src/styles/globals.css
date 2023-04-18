@@ -12,13 +12,14 @@
   --clr-compl-300: #05307a;
   --clr-compl-400: #052c38;
 
-  --clr-primary-200: #14151c;
+  --clr-primary-200: #1c1e2b;
   --clr-primary-300: #1d1e26;
   --clr-primary-400: #31344a;
 
   --clr-accent-200: #25a8ff;
   --clr-accent-280: #0077c7;
   --clr-accent-300: #005a99;
+  --clr-accent-400: #dbaa6a;
 }
 
 /* Sticky header and footer pushed down */

@@ -55,3 +55,11 @@
 .treeRoot > .li:not(:last-child) {
   border-bottom: 1px solid var(--clr-light-300);
 }
+
+.li:not(:last-child) {
+  padding-bottom: 3px;
+}
+
+.li:not(:first-child) {
+  padding-top: 3px;
+}
