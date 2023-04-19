@@ -57,7 +57,7 @@ function Sidebar(props: Props) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-          <nav className="tree-nav">
+          <nav className="tree-nav" data-testid="sidebar">
             <div className={styles.app}>
               <div className={styles.handleChatBar}>
                 <button

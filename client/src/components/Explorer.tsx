@@ -36,7 +36,7 @@ const getLastId = (treeData: NodeModel[]) => {
   return 0
 }
 
-const Main = () => {
+const Explorer = () => {
   const [responses, setResponses] = useState<ChatCompletionRequestMessage[]>([])
   const [node, setNode] = useState<NodeModel<CustomData>>({
     id: 1,
@@ -222,4 +222,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default Explorer
