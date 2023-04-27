@@ -1,4 +1,4 @@
-# Brain Meld App
+# Brain Meld
 
 ## Description
 
@@ -49,14 +49,14 @@ The app uses React/Next.js, Node.js, GraphQL and MongoDB to interact with the Op
 
 ### Frontend:
 
-React/Next.js
-TypeScript
+React/Next.js,
+TypeScript,
 Apollo client
 
 ### Backend:
 
-GraphQL API
-OpenAI REST API
+GraphQL API,
+OpenAI REST API,
 Node.js, graphql-yoga
 Mongoose
 
