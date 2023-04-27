@@ -1,6 +1,3 @@
-import express from 'express'
-const app = express()
-
 import * as dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import path from 'path'
@@ -21,7 +18,7 @@ const yoga = createYoga({ schema, graphiql: true })
 // Pass it into a server to hook into request handlers.
 const server = createServer(yoga)
 
-// Connect to DB then start the server
+// Connect to MongoDB then start the server
 connectDB().then(() => {
   server.listen(port, () => {
     console.info(`Server is running on http://localhost:${port}/graphql`)
