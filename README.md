@@ -2,8 +2,8 @@
 
 ## Description
 
-Brain Meld is a fullstack application that allows users to save their OpenAI API responses (ChatGPT) into a folder structure similar to a file explorer.
-It makes it easier to manage and organise the answers into different categories.
+Brain Meld is a full-stack application that allows users to communicate with ChatGPT and save the responses in a user-friendly folder structure resembling a file explorer.
+It makes it easier to manage and organise the answers into various categories.
 
 The app uses React/Next.js, Node.js, GraphQL and MongoDB to interact with the OpenAI API.
 
